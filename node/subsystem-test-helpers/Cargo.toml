@@ -1,0 +1,22 @@
+[package]
+name = "diamond-node-subsystem-test-helpers"
+version = "0.9.9"
+authors = ["Parity Technologies <admin@parity.io>"]
+edition = "2018"
+description = "Subsystem traits and message definitions"
+
+[dependencies]
+async-trait = "0.1.51"
+futures = "0.3.17"
+parking_lot = "0.11.1"
+diamond-node-subsystem = { path = "../subsystem" }
+diamond-node-subsystem-util = { path = "../subsystem-util" }
+diamond-primitives = { path = "../../primitives" }
+sp-core = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sp-keystore = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sc-keystore = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sp-keyring = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sp-application-crypto = { git = "https://github.com/paritytech/substrate", branch = "master" }
+
+[dev-dependencies]
+diamond-overseer = { path = "../overseer" }

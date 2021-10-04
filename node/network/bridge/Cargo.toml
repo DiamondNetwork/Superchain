@@ -1,0 +1,26 @@
+[package]
+name = "diamond-network-bridge"
+version = "0.9.9"
+authors = ["Parity Technologies <admin@parity.io>"]
+edition = "2018"
+
+[dependencies]
+async-trait = "0.1.51"
+futures = "0.3.17"
+tracing = "0.1.27"
+diamond-primitives = { path = "../../../primitives" }
+parity-scale-codec = { version = "2.0.0", default-features = false, features = ["derive"] }
+sc-network = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sp-consensus = { git = "https://github.com/paritytech/substrate", branch = "master" }
+diamond-subsystem = { package = "diamond-node-subsystem", path = "../../subsystem" }
+diamond-overseer = { path = "../../overseer" }
+diamond-node-network-protocol = { path = "../protocol" }
+diamond-node-subsystem-util = { path = "../../subsystem-util"}
+parking_lot = "0.11.1"
+
+[dev-dependencies]
+assert_matches = "1.4.0"
+diamond-node-subsystem-test-helpers = { path = "../../subsystem-test-helpers" }
+sp-core = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sp-keyring = { git = "https://github.com/paritytech/substrate", branch = "master" }
+futures-timer = "3"

@@ -1,0 +1,20 @@
+[package]
+name = "diamond-node-core-provisioner"
+version = "0.9.9"
+authors = ["Parity Technologies <admin@parity.io>"]
+edition = "2018"
+
+[dependencies]
+bitvec = { version = "0.20.1", default-features = false, features = ["alloc"] }
+futures = "0.3.17"
+tracing = "0.1.27"
+thiserror = "1.0.26"
+diamond-primitives = { path = "../../../primitives" }
+diamond-node-subsystem = { path = "../../subsystem" }
+diamond-node-subsystem-util = { path = "../../subsystem-util" }
+futures-timer = "3.0.2"
+
+[dev-dependencies]
+sp-application-crypto = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sp-keystore = { git = "https://github.com/paritytech/substrate", branch = "master" }
+diamond-node-subsystem-test-helpers = { path = "../../subsystem-test-helpers" }

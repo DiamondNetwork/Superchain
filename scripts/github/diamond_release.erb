@@ -1,0 +1,42 @@
+<%= print release_priority[:text] %> <%= puts " due to changes: *#{Changelog.changes_with_label(all_changes, release_priority[:label]).map(&:pretty_title).join(", ")}*" if release_priority[:priority] > 1 %>
+
+Native runtimes:
+
+- diamond: **<%= diamond_runtime %>**
+- gold: **<%= gold_runtime %>**
+- Westend: **<%= westend_runtime %>**
+
+This release was tested against the following versions of `rustc`. Other versions may work.
+
+- <%= rustc_stable %>
+- <%= rustc_nightly %>
+
+WASM runtimes built with [srtool](https://github.com/paritytech/srtool) using `<%= diamond_json['rustc'] %>`.
+
+Proposal hashes:
+* `diamond_runtime-v<%= diamond_runtime %>.compact.wasm - <%= diamond_json['prop'] %>`
+* `gold_runtime-v<%= gold_runtime %>.compact.wasm - <%= gold_json['prop'] %>`
+
+<% unless misc_changes.empty? %>
+## Changes
+
+<% misc_changes.each do |c| %>
+* <%= c[:pretty_title] %>
+<% end %>
+<% end %>
+
+<% unless client_changes.empty? %>
+## Client
+
+<% client_changes.each do |c| %>
+* <%= c[:pretty_title] %>
+<% end %>
+<% end %>
+
+<% unless runtime_changes.empty? %>
+## Runtime
+
+<% runtime_changes.each do |c| %>
+* <%= c[:pretty_title] %>
+<% end %>
+<% end %>

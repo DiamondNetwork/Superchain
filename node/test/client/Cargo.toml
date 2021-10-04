@@ -1,0 +1,33 @@
+[package]
+name = "diamond-test-client"
+version = "0.9.9"
+authors = ["Parity Technologies <admin@parity.io>"]
+edition = "2018"
+
+[dependencies]
+parity-scale-codec = { version = "2.0.0", default-features = false, features = ["derive"] }
+
+# diamond dependencies
+diamond-test-runtime = { path = "../../../runtime/test-runtime" }
+diamond-test-service = { path = "../service" }
+diamond-primitives = { path = "../../../primitives" }
+diamond-node-subsystem = { path = "../../subsystem" }
+
+# Substrate dependencies
+substrate-test-client = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sc-service = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sc-block-builder = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sc-consensus = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sp-blockchain = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sp-runtime = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sp-inherents = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sp-core = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sp-api = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sp-timestamp = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sp-consensus = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sp-consensus-babe = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sp-state-machine = { git = "https://github.com/paritytech/substrate", branch = "master" }
+
+[dev-dependencies]
+sp-keyring = { git = "https://github.com/paritytech/substrate", branch = "master" }
+futures = "0.3.17"

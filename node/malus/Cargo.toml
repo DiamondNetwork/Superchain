@@ -1,0 +1,34 @@
+[lib]
+name = "malus"
+path = "src/lib.rs"
+
+[[bin]]
+name = "malus-variant-a"
+path = "src/variant-a.rs"
+
+[package]
+name = "diamond-test-malus"
+description = "Misbehaving nodes for local testnets, system and Simnet tests."
+license = "GPL-3.0-only"
+version = "0.9.9"
+authors = ["Parity Technologies <admin@parity.io>"]
+edition = "2018"
+readme = "README.md"
+publish = false
+
+[dependencies]
+diamond-cli = { path = "../../cli", default-features = false, features = [ "cli", "malus" ]  }
+diamond-node-subsystem = { path = "../subsystem" }
+diamond-node-subsystem-util = { path = "../subsystem-util" }
+diamond-node-core-candidate-validation = { path = "../core/candidate-validation" }
+diamond-node-core-pvf = { path = "../core/pvf" }
+parity-util-mem = { version = "0.10.0", default-features = false, features = ["jemalloc-global"] }
+color-eyre = { version = "0.5.11", default-features = false }
+assert_matches = "1.5"
+structopt = "0.3.23"
+async-trait = "0.1.51"
+
+[dev-dependencies]
+diamond-node-subsystem-test-helpers = { path = "../subsystem-test-helpers" }
+sp-core = { git = "https://github.com/paritytech/substrate", branch = "master" }
+futures = { version = "0.3.17", features = ["thread-pool"] }

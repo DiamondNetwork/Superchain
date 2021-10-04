@@ -1,0 +1,18 @@
+[package]
+name = "diamond-node-core-bitfield-signing"
+version = "0.9.9"
+authors = ["Parity Technologies <admin@parity.io>"]
+edition = "2018"
+
+[dependencies]
+futures = "0.3.17"
+tracing = "0.1.27"
+diamond-primitives = { path = "../../../primitives" }
+diamond-node-subsystem = { path = "../../subsystem" }
+diamond-node-subsystem-util = { path = "../../subsystem-util" }
+sp-keystore = { git = "https://github.com/paritytech/substrate", branch = "master" }
+wasm-timer = "0.2.5"
+thiserror = "1.0.26"
+
+[dev-dependencies]
+diamond-node-subsystem-test-helpers = { path = "../../subsystem-test-helpers" }

@@ -1,0 +1,32 @@
+[package]
+name = "diamond-overseer"
+version = "0.9.9"
+authors = ["Parity Technologies <admin@parity.io>"]
+edition = "2018"
+
+[dependencies]
+client = { package = "sc-client-api", git = "https://github.com/paritytech/substrate", branch = "master" }
+sp-api = { git = "https://github.com/paritytech/substrate", branch = "master" }
+futures = "0.3.17"
+futures-timer = "3.0.2"
+parking_lot = "0.11.1"
+diamond-node-network-protocol = { path = "../network/protocol" }
+diamond-node-primitives = { path = "../primitives" }
+diamond-node-subsystem-types = { path = "../subsystem-types" }
+diamond-node-metrics = { path = "../metrics" }
+diamond-primitives = { path = "../../primitives" }
+diamond-overseer-gen = { path = "./overseer-gen" }
+diamond-overseer-all-subsystems-gen = { path = "./all-subsystems-gen" }
+tracing = "0.1.27"
+lru = "0.6"
+
+[dev-dependencies]
+metered-channel = { path = "../metered-channel" }
+sp-core = { git = "https://github.com/paritytech/substrate", branch = "master" }
+futures = { version = "0.3.17", features = ["thread-pool"] }
+femme = "2.1.1"
+assert_matches = "1.4.0"
+
+[features]
+default = []
+memory-stats = ["diamond-node-metrics/memory-stats"]

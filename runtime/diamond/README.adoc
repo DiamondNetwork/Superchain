@@ -1,0 +1,5 @@
+
+= diamond Runtime
+
+placeholder
+//TODO Write content :) (https://github.com/paritytech/Polkadot/issues/159)

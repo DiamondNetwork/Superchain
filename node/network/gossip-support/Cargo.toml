@@ -1,0 +1,28 @@
+[package]
+name = "diamond-gossip-support"
+version = "0.9.9"
+authors = ["Parity Technologies <admin@parity.io>"]
+edition = "2018"
+
+[dependencies]
+sp-application-crypto = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sp-keystore = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sp-core = { git = "https://github.com/paritytech/substrate", branch = "master" }
+
+diamond-node-network-protocol = { path = "../protocol" }
+diamond-node-subsystem = { path = "../../subsystem" }
+diamond-node-subsystem-util = { path = "../../subsystem-util" }
+diamond-primitives = { path = "../../../primitives" }
+
+futures = "0.3.17"
+rand = { version = "0.8.3", default-features = false }
+rand_chacha = { version = "0.3.1", default-features = false }
+tracing = "0.1.27"
+
+[dev-dependencies]
+sp-keyring = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sp-consensus-babe = { git = "https://github.com/paritytech/substrate", branch = "master" }
+
+diamond-node-subsystem-test-helpers = { path = "../../subsystem-test-helpers" }
+
+assert_matches = "1.4.0"

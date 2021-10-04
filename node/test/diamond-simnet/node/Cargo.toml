@@ -1,0 +1,8 @@
+[package]
+name = "diamond-simnet-node"
+version = "0.9.9"
+authors = ["Parity Technologies <admin@parity.io>"]
+edition = "2018"
+
+[dependencies]
+diamond-simnet = { path = "../common" }

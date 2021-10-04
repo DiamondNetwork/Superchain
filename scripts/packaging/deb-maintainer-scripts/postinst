@@ -1,0 +1,17 @@
+#!/bin/sh
+
+set -e
+
+action="$1"
+config_file="/etc/default/diamond"
+
+if [ "$action" = "configure" ]; then
+  # Make user and group
+  getent group diamond >/dev/null 2>&1 || addgroup --system diamond
+  getent passwd diamond >/dev/null 2>&1 ||
+    adduser --system --home /home/diamond --disabled-password \
+    --ingroup diamond diamond
+  if [ ! -e "$config_file" ]; then
+    echo 'diamond_CLI_ARGS=""' > /etc/default/diamond
+  fi
+fi

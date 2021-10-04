@@ -1,0 +1,32 @@
+[package]
+name = "diamond-dispute-distribution"
+version = "0.9.9"
+authors = ["Parity Technologies <admin@parity.io>"]
+edition = "2018"
+
+[dependencies]
+futures = "0.3.17"
+tracing = "0.1.27"
+derive_more = "0.99.14"
+parity-scale-codec = { version = "2.0.0", features = ["std"] }
+diamond-primitives = { path = "../../../primitives" }
+diamond-erasure-coding = { path = "../../../erasure-coding" }
+diamond-subsystem = { package = "diamond-node-subsystem", path = "../../subsystem" }
+diamond-node-network-protocol = { path = "../../network/protocol" }
+diamond-node-subsystem-util = { path = "../../subsystem-util" }
+diamond-node-primitives = { path = "../../primitives" }
+sc-network = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sp-application-crypto = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sp-keystore = { git = "https://github.com/paritytech/substrate", branch = "master" }
+thiserror = "1.0.26"
+lru = "0.6.6"
+
+[dev-dependencies]
+async-trait = "0.1.51"
+diamond-subsystem-testhelpers = { package = "diamond-node-subsystem-test-helpers", path = "../../subsystem-test-helpers" }
+sp-keyring = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sp-tracing = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sc-keystore = { git = "https://github.com/paritytech/substrate", branch = "master" }
+futures-timer = "3.0.2"
+assert_matches = "1.4.0"
+lazy_static = "1.4.0"

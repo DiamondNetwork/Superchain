@@ -1,0 +1,23 @@
+[package]
+name = "diamond-node-core-chain-api"
+version = "0.9.9"
+authors = ["Parity Technologies <admin@parity.io>"]
+edition = "2018"
+
+[dependencies]
+futures = "0.3.17"
+tracing = "0.1.27"
+sp-blockchain = { git = "https://github.com/paritytech/substrate", branch = "master" }
+diamond-primitives = { path = "../../../primitives" }
+diamond-subsystem = { package = "diamond-node-subsystem", path = "../../subsystem" }
+diamond-node-subsystem-util = { path = "../../subsystem-util" }
+sc-client-api = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sc-consensus-babe = { git = "https://github.com/paritytech/substrate", branch = "master" }
+
+[dev-dependencies]
+futures = { version = "0.3.17", features = ["thread-pool"] }
+maplit = "1.0.2"
+parity-scale-codec = "2.0.0"
+diamond-node-primitives = { path = "../../primitives" }
+diamond-node-subsystem-test-helpers = { path = "../../subsystem-test-helpers" }
+sp-core = { git = "https://github.com/paritytech/substrate", branch = "master" }

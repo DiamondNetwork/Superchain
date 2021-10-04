@@ -1,0 +1,179 @@
+[package]
+name = "diamond-service"
+version = "0.9.9"
+authors = ["Parity Technologies <admin@parity.io>"]
+edition = "2018"
+
+[dependencies]
+# Substrate Client
+sc-authority-discovery = { git = "https://github.com/paritytech/substrate", branch = "master" }
+babe = { package = "sc-consensus-babe", git = "https://github.com/paritytech/substrate", branch = "master" }
+beefy-primitives = { git = "https://github.com/paritytech/grandpa-bridge-gadget", branch = "master" }
+beefy-gadget = { git = "https://github.com/paritytech/grandpa-bridge-gadget", branch = "master" }
+grandpa = { package = "sc-finality-grandpa", git = "https://github.com/paritytech/substrate", branch = "master" }
+sc-block-builder = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sc-chain-spec = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sc-client-api = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sc-client-db = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sc-consensus-uncles = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sc-consensus = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sc-consensus-slots = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sc-executor = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sc-network = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sc-transaction-pool = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sc-sync-state-rpc = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sc-keystore = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sc-basic-authorship = { git = "https://github.com/paritytech/substrate", branch = "master" }
+service = { package = "sc-service", git = "https://github.com/paritytech/substrate", branch = "master", default-features = false }
+telemetry = { package = "sc-telemetry", git = "https://github.com/paritytech/substrate", branch = "master" }
+lru = "0.6"
+
+# Substrate Primitives
+sp-authority-discovery = { git = "https://github.com/paritytech/substrate", branch = "master" }
+consensus_common = { package = "sp-consensus", git = "https://github.com/paritytech/substrate", branch = "master" }
+grandpa_primitives = { package = "sp-finality-grandpa", git = "https://github.com/paritytech/substrate", branch = "master" }
+inherents = { package = "sp-inherents", git = "https://github.com/paritytech/substrate", branch = "master" }
+sp-api = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sp-block-builder = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sp-blockchain = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sp-core = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sp-io = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sp-keystore = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sp-offchain = { package = "sp-offchain", git = "https://github.com/paritytech/substrate", branch = "master" }
+sp-runtime = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sp-session = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sp-storage = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sp-transaction-pool = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sp-trie = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sp-timestamp = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sp-consensus-babe = { git = "https://github.com/paritytech/substrate", branch = "master" }
+sp-state-machine = { git = "https://github.com/paritytech/substrate", branch = "master" }
+
+# Substrate Pallets
+pallet-babe = { git = "https://github.com/paritytech/substrate", branch = "master" }
+pallet-im-online = { git = "https://github.com/paritytech/substrate", branch = "master" }
+pallet-staking = { git = "https://github.com/paritytech/substrate", branch = "master" }
+pallet-transaction-payment-rpc-runtime-api = { git = "https://github.com/paritytech/substrate", branch = "master" }
+pallet-mmr-primitives = { git = "https://github.com/paritytech/substrate", branch = "master" }
+
+# Substrate Other
+frame-system-rpc-runtime-api = { git = "https://github.com/paritytech/substrate", branch = "master" }
+prometheus-endpoint = { package = "substrate-prometheus-endpoint", git = "https://github.com/paritytech/substrate", branch = "master" }
+
+# External Crates
+futures = "0.3.17"
+hex-literal = "0.3.3"
+tracing = "0.1.27"
+serde = { version = "1.0.130", features = ["derive"] }
+thiserror = "1.0.26"
+kvdb = "0.10.0"
+kvdb-rocksdb = { version = "0.14.0", optional = true }
+async-trait = "0.1.51"
+
+# diamond
+diamond-node-core-parachains-inherent = { path = "../core/parachains-inherent" }
+diamond-overseer = { path = "../overseer" }
+diamond-client = { path = "../client", default-features = false, optional = true }
+diamond-parachain = { path = "../../parachain" }
+diamond-primitives = { path = "../../primitives" }
+diamond-node-primitives = { path = "../primitives" }
+diamond-rpc = { path = "../../rpc" }
+diamond-subsystem = { package = "diamond-node-subsystem", path = "../subsystem" }
+diamond-node-subsystem-util = { path = "../subsystem-util" }
+diamond-runtime-parachains = { path = "../../runtime/parachains" }
+diamond-node-network-protocol = { path = "../network/protocol" }
+
+# diamond Runtimes
+diamond-runtime = { path = "../../runtime/diamond", optional = true }
+gold-runtime = { path = "../../runtime/gold", optional = true }
+westend-runtime = { path = "../../runtime/westend", optional = true }
+rococo-runtime = { path = "../../runtime/rococo", optional = true }
+
+# diamond Subsystems
+diamond-approval-distribution = { path = "../network/approval-distribution", optional = true }
+diamond-availability-bitfield-distribution = { path = "../network/bitfield-distribution", optional = true }
+diamond-availability-distribution = { path = "../network/availability-distribution", optional = true }
+diamond-availability-recovery = { path = "../network/availability-recovery", optional = true }
+diamond-collator-protocol = { path = "../network/collator-protocol", optional = true }
+diamond-dispute-distribution = { path = "../network/dispute-distribution", optional = true }
+diamond-gossip-support = { path = "../network/gossip-support", optional = true }
+diamond-network-bridge = { path = "../network/bridge", optional = true }
+diamond-node-collation-generation = { path = "../collation-generation", optional = true }
+diamond-node-core-approval-voting = { path = "../core/approval-voting", optional = true }
+diamond-node-core-av-store = { path = "../core/av-store", optional = true }
+diamond-node-core-backing = { path = "../core/backing", optional = true }
+diamond-node-core-bitfield-signing = { path = "../core/bitfield-signing", optional = true }
+diamond-node-core-candidate-validation = { path = "../core/candidate-validation", optional = true }
+diamond-node-core-chain-api = { path = "../core/chain-api", optional = true }
+diamond-node-core-chain-selection = { path = "../core/chain-selection", optional = true }
+diamond-node-core-dispute-coordinator = { path = "../core/dispute-coordinator", optional = true }
+diamond-node-core-dispute-participation = { path = "../core/dispute-participation", optional = true }
+diamond-node-core-provisioner = { path = "../core/provisioner", optional = true }
+diamond-node-core-runtime-api = { path = "../core/runtime-api", optional = true }
+diamond-statement-distribution = { path = "../network/statement-distribution", optional = true }
+
+[dev-dependencies]
+diamond-test-client = { path = "../test/client" }
+diamond-node-subsystem-test-helpers = { path = "../subsystem-test-helpers" }
+env_logger = "0.9.0"
+log = "0.4.14"
+assert_matches = "1.5.0"
+
+[features]
+default = ["db", "full-node", "diamond-native"]
+
+db = [
+	"service/db"
+]
+
+full-node = [
+	"diamond-node-core-av-store",
+	"diamond-node-core-approval-voting",
+	"diamond-availability-bitfield-distribution",
+	"diamond-availability-distribution",
+	"diamond-availability-recovery",
+	"diamond-client",
+	"diamond-collator-protocol",
+	"diamond-dispute-distribution",
+	"diamond-gossip-support",
+	"diamond-network-bridge",
+	"diamond-node-collation-generation",
+	"diamond-node-core-backing",
+	"diamond-node-core-bitfield-signing",
+	"diamond-node-core-candidate-validation",
+	"diamond-node-core-chain-api",
+	"diamond-node-core-chain-selection",
+	"diamond-node-core-dispute-coordinator",
+	"diamond-node-core-dispute-participation",
+	"diamond-node-core-provisioner",
+	"diamond-node-core-runtime-api",
+	"diamond-statement-distribution",
+	"diamond-approval-distribution",
+	"kvdb-rocksdb"
+]
+
+light-node = []
+
+# Configure the native runtimes to use. diamond is enabled by default.
+#
+# Validators require the native runtime currently
+diamond-native = [ "diamond-runtime", "diamond-client/diamond" ]
+gold-native = [ "gold-runtime", "diamond-client/gold" ]
+westend-native = [ "westend-runtime", "diamond-client/westend" ]
+rococo-native = [ "rococo-runtime", "diamond-client/rococo" ]
+
+runtime-benchmarks = [
+	"diamond-runtime/runtime-benchmarks",
+	"gold-runtime/runtime-benchmarks",
+	"westend-runtime/runtime-benchmarks",
+	"rococo-runtime/runtime-benchmarks"
+]
+try-runtime = [
+	"diamond-runtime/try-runtime",
+	"gold-runtime/try-runtime",
+	"westend-runtime/try-runtime",
+	"rococo-runtime/try-runtime",
+]
+malus = ["full-node"]
+memory-stats = ["diamond-overseer/memory-stats"]
+disputes = ["diamond-node-core-dispute-coordinator/disputes"]
