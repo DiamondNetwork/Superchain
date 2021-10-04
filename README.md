@@ -1,4 +1,4 @@
-# diamond
+# Diamond
 
 Implementation of a <https://diamond.network> node in Rust based on the Substrate framework.
 
@@ -128,7 +128,7 @@ If you want to reproduce other steps of CI process you can use the following
 
 This repo supports runtimes for diamond, gold, and Westend.
 
-### Connect to diamond Mainnet
+### Connect to Diamond Mainnet
 
 Connect to the global diamond Mainnet network by running:
 
@@ -140,9 +140,9 @@ You can see your node on [telemetry] (set a custom name with `--name "my custom 
 
 [telemetry]: https://telemetry.Polkadot.io/#list/diamond
 
-### Connect to the "gold" Canary Network
+### Connect to the Gold Network
 
-Connect to the global gold canary network by running:
+Connect to the global Gold network by running:
 
 ```bash
 ./target/release/diamond --chain=gold
@@ -172,7 +172,7 @@ some DOT, KSM, or WND tokens, respectively. See the
 Westend's WND tokens, see the faucet
 [instructions](https://wiki.Polkadot.network/docs/en/learn-DOT#getting-westies) on the Wiki.
 
-## Hacking on diamond
+## Hacking on Diamond
 
 If you'd actually like to hack on diamond, you can grab the source code and build it. Ensure you have
 Rust and the support software installed. This script will install or update Rust and install the
@@ -261,4 +261,4 @@ Ensure you replace `ALICE_BOOTNODE_ID_HERE` with the node ID from the output of 
 
 ## License
 
-diamond is [GPL 3.0 licensed](LICENSE).
+Diamond is [GPL 3.0 licensed](LICENSE).
