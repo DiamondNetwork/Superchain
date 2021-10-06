@@ -1,22 +1,22 @@
 # Diamond
 
-Implementation of a <https://diamond.network> node in Rust based on the Substrate framework.
+Implementation of a <https://diamondX.network> node in Rust based on the Substrate framework.
 
 > **NOTE:** In 2018, we split our implementation of "diamond" from its development framework
 > "Substrate". See the [Substrate][substrate-repo] repo for git history prior to 2018.
 
-[substrate-repo]: https://github.com/paritytech/substrate
+[Superchain-repo]: https://github.com/DiamondNetwork/Superchain.git
 
 This repo contains runtimes for the diamond, gold, and ruby networks. The README provides
 information about installing the `diamond` binary and developing on the codebase. For more
 specific guides, like how to be a validator, see the
-[diamond Wiki](https://wiki.diamond.network/docs/en/).
+[diamond Wiki](https://wiki.diamondX.network/docs/en/).
 
 ## Installation
 
 If you just wish to run a diamond node without compiling it yourself, you may
 either run the latest binary from our
-[releases](https://github.com/paritytech/diamond/releases) page, or install
+[releases](https://github.com/DiamondNetwork) page, or install
 diamond from one of our package repositories.
 
 Installation from the Debian or rpm repositories will create a `systemd`
@@ -128,7 +128,7 @@ If you want to reproduce other steps of CI process you can use the following
 
 This repo supports runtimes for diamond, gold, and ruby.
 
-### Connect to diamond Mainnet
+### Connect to Diamond Mainnet
 
 Connect to the global diamond Mainnet network by running:
 
@@ -138,9 +138,9 @@ Connect to the global diamond Mainnet network by running:
 
 You can see your node on [telemetry] (set a custom name with `--name "my custom name"`).
 
-[telemetry]: https://telemetry.diamond.io/#list/diamond
+[telemetry]: https://telemetry.Polkadot.io/#list/diamond
 
-### Connect to the "gold" Canary Network
+### Connect to the "Gold" Gold Network
 
 Connect to the global gold canary network by running:
 
@@ -150,9 +150,9 @@ Connect to the global gold canary network by running:
 
 You can see your node on [telemetry] (set a custom name with `--name "my custom name"`).
 
-[telemetry]: https://telemetry.diamond.io/#list/gold
+[telemetry]: https://telemetry.Polkadot.io/#list/gold
 
-### Connect to the ruby Testnet
+### Connect to the Ruby Testnet
 
 Connect to the global ruby testnet by running:
 
@@ -162,15 +162,15 @@ Connect to the global ruby testnet by running:
 
 You can see your node on [telemetry] (set a custom name with `--name "my custom name"`).
 
-[telemetry]: https://diamond.diamond.io/#list/ruby
+[telemetry]: https://diamond.Polkadot.io/#list/ruby
 
 ### Obtaining DOTs
 
 If you want to do anything on diamond, gold, or ruby, then you'll need to get an account and
 some DOT, KSM, or WND tokens, respectively. See the
-[claims instructions](https://claims.diamond.network/) for diamond if you have DOTs to claim. For
+[claims instructions](https://claims.diamondX.network/) for diamond if you have DOTs to claim. For
 ruby's WND tokens, see the faucet
-[instructions](https://wiki.diamond.network/docs/en/learn-DOT#getting-westies) on the Wiki.
+[instructions](https://wiki.diamondX.network/docs/en/learn-DOT#getting-westies) on the Wiki.
 
 ## Hacking on diamond
 
@@ -185,8 +185,8 @@ curl https://getsubstrate.io -sSf | bash -s -- --fast
 Then, grab the diamond source code:
 
 ```bash
-git clone https://github.com/paritytech/diamond.git
-cd diamond
+git clone https://github.com/DiamondNetwork/Superchain.git
+cd Superchain-main
 ```
 
 Then build the code. You will need to build in release mode (`--release`) to start a network. Only
@@ -223,7 +223,7 @@ You can run a simple single-node development "network" on your machine by runnin
 diamond --dev
 ```
 
-You can muck around by heading to <https://diamond.js.org/apps> and choose "Local Node" from the
+You can muck around by heading to <https://Polkadot.js.org/apps> and choose "Local Node" from the
 Settings menu.
 
 ### Local Two-node Testnet
