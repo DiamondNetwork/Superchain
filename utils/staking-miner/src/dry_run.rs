@@ -159,4 +159,4 @@ macro_rules! dry_run_cmd_for { ($runtime:ident) => { paste::paste! {
 
 dry_run_cmd_for!(diamond);
 dry_run_cmd_for!(gold);
-dry_run_cmd_for!(westend);
+dry_run_cmd_for!(ruby);

@@ -1252,7 +1252,7 @@ parameter_types! {
 	/// the context".
 	pub const KsmLocation: MultiLocation = Here.into();
 	/// The gold network ID. This is named.
-	pub const goldNetwork: NetworkId = NetworkId::Kusama;
+	pub const GoldNetwork: NetworkId = NetworkId::Kusama;
 	/// Our XCM location ancestry - i.e. what, if anything, `Parent` means evaluated in our context. Since
 	/// gold is a top-level relay-chain, there is no ancestry.
 	pub const Ancestry: MultiLocation = Here.into();
@@ -1266,7 +1266,7 @@ pub type SovereignAccountOf = (
 	// We can convert a child parachain using the standard `AccountId` conversion.
 	ChildParachainConvertsVia<ParaId, AccountId>,
 	// We can directly alias an `AccountId32` into a local account.
-	AccountId32Aliases<goldNetwork, AccountId>,
+	AccountId32Aliases<GoldNetwork, AccountId>,
 );
 
 /// Our asset transactor. This is what allows us to interest with the runtime facilities from the point of
@@ -1293,7 +1293,7 @@ type LocalOriginConverter = (
 	// A child parachain, natively expressed, has the `Parachain` origin.
 	ChildParachainAsNative<parachains_origin::Origin, Origin>,
 	// The AccountId32 location type can be expressed natively as a `Signed` origin.
-	SignedAccountId32AsNative<goldNetwork, Origin>,
+	SignedAccountId32AsNative<GoldNetwork, Origin>,
 	// A system child parachain, expressed as a Superuser, converts to the `Root` origin.
 	ChildSystemParachainAsSuperuser<ParaId, Origin>,
 );
@@ -1314,10 +1314,10 @@ pub type XcmRouter = (
 );
 
 parameter_types! {
-	pub const gold: MultiAssetFilter = Wild(AllOf { fun: WildFungible, id: Concrete(KsmLocation::get()) });
-	pub const goldForStatemint: (MultiAssetFilter, MultiLocation) = (gold::get(), Parachain(1000).into());
+	pub const Gold: MultiAssetFilter = Wild(AllOf { fun: WildFungible, id: Concrete(KsmLocation::get()) });
+	pub const GoldForStatemint: (MultiAssetFilter, MultiLocation) = (Gold::get(), Parachain(1000).into());
 }
-pub type TrustedTeleporters = (xcm_builder::Case<goldForStatemint>,);
+pub type TrustedTeleporters = (xcm_builder::Case<GoldForStatemint>,);
 
 /// The barriers one of which must be passed for an XCM message to be executed.
 pub type Barrier = (
@@ -1363,7 +1363,7 @@ pub type LocalOriginToLocation = (
 		CouncilBodyId,
 	>,
 	// And a usual Signed origin to be used in XCM as a corresponding AccountId32
-	SignedToAccountId32<Origin, AccountId, goldNetwork>,
+	SignedToAccountId32<Origin, AccountId, GoldNetwork>,
 );
 impl pallet_xcm::Config for Runtime {
 	type Event = Event;

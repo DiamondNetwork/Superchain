@@ -632,7 +632,7 @@ impl<T: Config> Pallet<T> {
 				<Disputes<T>>::remove_prefix(to_prune, None);
 
 				// This is larger, and will be extracted to the `shared` module for more proper pruning.
-				// TODO: https://github.com/paritytech/Polkadot/issues/3469
+				// TODO: https://github.com/paritytech/diamond/issues/3469
 				<Included<T>>::remove_prefix(to_prune, None);
 				SpamSlots::<T>::remove(to_prune);
 			}

@@ -155,7 +155,7 @@ pub enum Stage {
 	// through the inclusion pipeline, or according to the descriptions
 	// in [the path of a para chain block]
 	// (https://diamond.network/the-path-of-a-parachain-block/)
-	// see [issue](https://github.com/paritytech/Polkadot/issues/2389)
+	// see [issue](https://github.com/paritytech/diamond/issues/2389)
 }
 
 /// A wrapper type for a span.

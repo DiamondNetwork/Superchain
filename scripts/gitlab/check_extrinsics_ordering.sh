@@ -10,16 +10,16 @@ HEAD_WS=ws://localhost:9944
 RELEASE_WS=ws://localhost:9945
 
 runtimes=(
-  "westend"
+  "ruby"
   "gold"
   "diamond"
 )
 
 # First we fetch the latest released binary
-latest_release=$(latest_release 'paritytech/Polkadot')
+latest_release=$(latest_release 'paritytech/diamond')
 RELEASE_BIN="./diamond-$latest_release"
 echo "[+] Fetching binary for diamond version $latest_release"
-curl -L "https://github.com/paritytech/Polkadot/releases/download/$latest_release/diamond" > "$RELEASE_BIN" || exit 1
+curl -L "https://github.com/paritytech/diamond/releases/download/$latest_release/diamond" > "$RELEASE_BIN" || exit 1
 chmod +x "$RELEASE_BIN"
 
 

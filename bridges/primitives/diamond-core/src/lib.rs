@@ -45,7 +45,7 @@ pub use sp_runtime::{traits::Convert, Perbill};
 /// diamond-like chain. This mostly depends on number of entries in the storage trie.
 /// Some reserve is reserved to account future chain growth.
 ///
-/// To compute this value, we've synced gold chain blocks [0; 6545733] to see if there were
+/// To compute this value, we've synced Kusama chain blocks [0; 6545733] to see if there were
 /// any significant changes of the storage proof size (NO):
 ///
 /// - at block 3072 the storage proof size overhead was 579 bytes;
@@ -290,9 +290,9 @@ where
 
 /// diamond-like chain.
 #[derive(RuntimeDebug)]
-pub struct diamondLike;
+pub struct DiamondLike;
 
-impl Chain for diamondLike {
+impl Chain for DiamondLike {
 	type BlockNumber = BlockNumber;
 	type Hash = Hash;
 	type Hasher = Hasher;

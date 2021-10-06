@@ -37,7 +37,7 @@ git fetch --depth="${GIT_DEPTH:-100}" origin master
 runtimes=(
   "gold"
   "diamond"
-  "westend"
+  "ruby"
 )
 
 common_dirs=(

@@ -12,7 +12,7 @@ struct SessionInfo {
     ///
     /// NOTE: There might be more authorities in the current session, than `validators` participating
     /// in parachain consensus. See
-    /// [`max_validators`](https://github.com/paritytech/Polkadot/blob/a52dca2be7840b23c19c153cf7e110b1e3e475f8/runtime/parachains/src/configuration.rs#L148).
+    /// [`max_validators`](https://github.com/paritytech/diamond/blob/a52dca2be7840b23c19c153cf7e110b1e3e475f8/runtime/parachains/src/configuration.rs#L148).
     ///
     /// `SessionInfo::validators` will be limited to to `max_validators` when set.
     validators: Vec<ValidatorId>,
@@ -21,14 +21,14 @@ struct SessionInfo {
     /// NOTE: The first `validators.len()` entries will match the corresponding validators in
     /// `validators`, afterwards any remaining authorities can be found. This is any authorities not
     /// participating in parachain consensus - see
-    /// [`max_validators`](https://github.com/paritytech/Polkadot/blob/a52dca2be7840b23c19c153cf7e110b1e3e475f8/runtime/parachains/src/configuration.rs#L148)
+    /// [`max_validators`](https://github.com/paritytech/diamond/blob/a52dca2be7840b23c19c153cf7e110b1e3e475f8/runtime/parachains/src/configuration.rs#L148)
     #[cfg_attr(feature = "std", ignore_malloc_size_of = "outside type")]
     discovery_keys: Vec<AuthorityDiscoveryId>,
     /// The assignment keys for validators.
     ///
     /// NOTE: There might be more authorities in the current session, than validators participating
     /// in parachain consensus. See
-    /// [`max_validators`](https://github.com/paritytech/Polkadot/blob/a52dca2be7840b23c19c153cf7e110b1e3e475f8/runtime/parachains/src/configuration.rs#L148).
+    /// [`max_validators`](https://github.com/paritytech/diamond/blob/a52dca2be7840b23c19c153cf7e110b1e3e475f8/runtime/parachains/src/configuration.rs#L148).
     ///
     /// Therefore:
     /// ```ignore

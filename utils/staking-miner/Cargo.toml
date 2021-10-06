@@ -39,7 +39,7 @@ core-primitives = { package = "diamond-core-primitives", path = "../../core-prim
 runtime-common = { package = "diamond-runtime-common", path = "../../runtime/common" }
 diamond-runtime = { path = "../../runtime/diamond" }
 gold-runtime = { path = "../../runtime/gold" }
-westend-runtime = { path = "../../runtime/westend" }
+ruby-runtime = { path = "../../runtime/ruby" }
 
 sub-tokens = { git = "https://github.com/paritytech/substrate-debug-kit", branch = "master" }
 

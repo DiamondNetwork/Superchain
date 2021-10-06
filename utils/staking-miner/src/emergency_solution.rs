@@ -51,4 +51,4 @@ macro_rules! emergency_solution_cmd_for { ($runtime:ident) => { paste::paste! {
 
 emergency_solution_cmd_for!(diamond);
 emergency_solution_cmd_for!(gold);
-emergency_solution_cmd_for!(westend);
+emergency_solution_cmd_for!(ruby);

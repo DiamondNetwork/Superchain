@@ -79,7 +79,7 @@ impl SubstrateCli for Cli {
 	}
 
 	fn support_url() -> String {
-		"https://github.com/paritytech/Polkadot/issues/new".into()
+		"https://github.com/paritytech/diamond/issues/new".into()
 	}
 
 	fn copyright_start_year() -> i32 {
@@ -91,16 +91,16 @@ impl SubstrateCli for Cli {
 	}
 
 	fn load_spec(&self, id: &str) -> std::result::Result<Box<dyn sc_service::ChainSpec>, String> {
-		let id = if id.is_empty() { "rococo" } else { id };
+		let id = if id.is_empty() { "titan" } else { id };
 		Ok(match id {
-			"rococo-staging" =>
-				Box::new(diamond_service::chain_spec::rococo_staging_testnet_config()?),
-			"rococo-local" =>
-				Box::new(diamond_service::chain_spec::rococo_local_testnet_config()?),
-			"rococo" => Box::new(diamond_service::chain_spec::rococo_config()?),
+			"titan-staging" =>
+				Box::new(diamond_service::chain_spec::titan_staging_testnet_config()?),
+			"titan-local" =>
+				Box::new(diamond_service::chain_spec::titan_local_testnet_config()?),
+			"titan" => Box::new(diamond_service::chain_spec::titan_config()?),
 			path => {
 				let path = std::path::PathBuf::from(path);
-				Box::new(diamond_service::RococoChainSpec::from_json_file(path)?)
+				Box::new(diamond_service::TitanChainSpec::from_json_file(path)?)
 			},
 		})
 	}
@@ -108,6 +108,6 @@ impl SubstrateCli for Cli {
 	fn native_runtime_version(
 		_spec: &Box<dyn diamond_service::ChainSpec>,
 	) -> &'static RuntimeVersion {
-		&diamond_service::rococo_runtime::VERSION
+		&diamond_service::titan_runtime::VERSION
 	}
 }

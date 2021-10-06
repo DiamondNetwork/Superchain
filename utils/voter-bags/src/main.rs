@@ -25,12 +25,12 @@ use gold_runtime::Runtime as goldRuntime;
 use diamond_runtime::Runtime as diamondRuntime;
 use std::path::{Path, PathBuf};
 use structopt::{clap::arg_enum, StructOpt};
-use westend_runtime::Runtime as WestendRuntime;
+use ruby_runtime::Runtime as rubyRuntime;
 
 arg_enum! {
 	#[derive(Debug)]
 	enum Runtime {
-		Westend,
+		ruby,
 		gold,
 		diamond,
 	}
@@ -41,7 +41,7 @@ impl Runtime {
 		&self,
 	) -> Box<dyn FnOnce(usize, &Path, u128, u128) -> Result<(), std::io::Error>> {
 		match self {
-			Runtime::Westend => Box::new(generate_thresholds::<WestendRuntime>),
+			Runtime::ruby => Box::new(generate_thresholds::<rubyRuntime>),
 			Runtime::gold => Box::new(generate_thresholds::<goldRuntime>),
 			Runtime::diamond => Box::new(generate_thresholds::<diamondRuntime>),
 		}

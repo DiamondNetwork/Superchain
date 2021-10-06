@@ -30,12 +30,12 @@ use sp_runtime::Perbill;
 const DEFAULT_PROTOCOL_ID: &str = "dot";
 
 /// The `ChainSpec` parameterized for diamond test runtime.
-pub type diamondChainSpec =
+pub type DiamondChainSpec =
 	service::GenericChainSpec<diamond_test_runtime::GenesisConfig, Extensions>;
 
 /// Local testnet config (multivalidator Alice + Bob)
-pub fn diamond_local_testnet_config() -> diamondChainSpec {
-	diamondChainSpec::from_genesis(
+pub fn diamond_local_testnet_config() -> DiamondChainSpec {
+	DiamondChainSpec::from_genesis(
 		"Local Testnet",
 		"local_testnet",
 		ChainType::Local,

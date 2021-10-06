@@ -7,7 +7,7 @@
 runtimes=(
   diamond
   gold
-  westend
+  ruby
 )
 
 for runtime in "${runtimes[@]}"; do

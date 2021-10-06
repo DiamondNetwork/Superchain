@@ -114,7 +114,7 @@ pub mod pallet {
 			T::DisputesHandler::filter_multi_dispute_data(&mut inherent_data.disputes);
 
 			// Sanity check: session changes can invalidate an inherent, and we _really_ don't want that to happen.
-			// See github.com/paritytech/Polkadot/issues/1327
+			// See github.com/paritytech/diamond/issues/1327
 			let inherent_data =
 				match Self::enter(frame_system::RawOrigin::None.into(), inherent_data.clone()) {
 					Ok(_) => inherent_data,

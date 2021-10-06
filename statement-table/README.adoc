@@ -2,4 +2,4 @@
 = diamond Statement table
 
 placeholder
-//TODO Write content :) (https://github.com/paritytech/Polkadot/issues/159)
+//TODO Write content :) (https://github.com/paritytech/diamond/issues/159)

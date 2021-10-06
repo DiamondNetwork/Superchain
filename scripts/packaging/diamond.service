@@ -1,7 +1,7 @@
 [Unit]
 Description=diamond Node
 After=network.target
-Documentation=https://github.com/paritytech/Polkadot
+Documentation=https://github.com/paritytech/diamond
 
 [Service]
 EnvironmentFile=-/etc/default/diamond

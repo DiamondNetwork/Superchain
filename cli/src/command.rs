@@ -23,7 +23,7 @@ use service::{self, IdentifyVariant};
 #[derive(thiserror::Error, Debug)]
 pub enum Error {
 	#[error(transparent)]
-	diamondService(#[from] service::Error),
+	DiamondService(#[from] service::Error),
 
 	#[error(transparent)]
 	SubstrateCli(#[from] sc_cli::Error),
@@ -68,7 +68,7 @@ impl SubstrateCli for Cli {
 	}
 
 	fn support_url() -> String {
-		"https://github.com/paritytech/Polkadot/issues/new".into()
+		"https://github.com/paritytech/diamond/issues/new".into()
 	}
 
 	fn copyright_start_year() -> i32 {
@@ -82,7 +82,7 @@ impl SubstrateCli for Cli {
 	fn load_spec(&self, id: &str) -> std::result::Result<Box<dyn sc_service::ChainSpec>, String> {
 		let id = if id == "" {
 			let n = get_exec_name().unwrap_or_default();
-			["diamond", "gold", "westend", "rococo"]
+			["diamond", "gold", "ruby", "titan"]
 				.iter()
 				.cloned()
 				.find(|&chain| n.starts_with(chain))
@@ -108,48 +108,48 @@ impl SubstrateCli for Cli {
 			"diamond-local" => Box::new(service::chain_spec::diamond_local_testnet_config()?),
 			#[cfg(feature = "diamond-native")]
 			"diamond-staging" => Box::new(service::chain_spec::diamond_staging_testnet_config()?),
-			"rococo" => Box::new(service::chain_spec::rococo_config()?),
-			#[cfg(feature = "rococo-native")]
-			"rococo-dev" => Box::new(service::chain_spec::rococo_development_config()?),
-			#[cfg(feature = "rococo-native")]
-			"rococo-local" => Box::new(service::chain_spec::rococo_local_testnet_config()?),
-			#[cfg(feature = "rococo-native")]
-			"rococo-staging" => Box::new(service::chain_spec::rococo_staging_testnet_config()?),
-			#[cfg(not(feature = "rococo-native"))]
-			name if name.starts_with("rococo-") && !name.ends_with(".json") =>
-				Err(format!("`{}` only supported with `rococo-native` feature enabled.", name))?,
-			"westend" => Box::new(service::chain_spec::westend_config()?),
-			#[cfg(feature = "westend-native")]
-			"westend-dev" => Box::new(service::chain_spec::westend_development_config()?),
-			#[cfg(feature = "westend-native")]
-			"westend-local" => Box::new(service::chain_spec::westend_local_testnet_config()?),
-			#[cfg(feature = "westend-native")]
-			"westend-staging" => Box::new(service::chain_spec::westend_staging_testnet_config()?),
-			#[cfg(not(feature = "westend-native"))]
-			name if name.starts_with("westend-") && !name.ends_with(".json") =>
-				Err(format!("`{}` only supported with `westend-native` feature enabled.", name))?,
+			"titan" => Box::new(service::chain_spec::titan_config()?),
+			#[cfg(feature = "titan-native")]
+			"titan-dev" => Box::new(service::chain_spec::titan_development_config()?),
+			#[cfg(feature = "titan-native")]
+			"titan-local" => Box::new(service::chain_spec::titan_local_testnet_config()?),
+			#[cfg(feature = "titan-native")]
+			"titan-staging" => Box::new(service::chain_spec::titan_staging_testnet_config()?),
+			#[cfg(not(feature = "titan-native"))]
+			name if name.starts_with("titan-") && !name.ends_with(".json") =>
+				Err(format!("`{}` only supported with `titan-native` feature enabled.", name))?,
+			"ruby" => Box::new(service::chain_spec::ruby_config()?),
+			#[cfg(feature = "ruby-native")]
+			"ruby-dev" => Box::new(service::chain_spec::ruby_development_config()?),
+			#[cfg(feature = "ruby-native")]
+			"ruby-local" => Box::new(service::chain_spec::ruby_local_testnet_config()?),
+			#[cfg(feature = "ruby-native")]
+			"ruby-staging" => Box::new(service::chain_spec::ruby_staging_testnet_config()?),
+			#[cfg(not(feature = "ruby-native"))]
+			name if name.starts_with("ruby-") && !name.ends_with(".json") =>
+				Err(format!("`{}` only supported with `ruby-native` feature enabled.", name))?,
 			"wococo" => Box::new(service::chain_spec::wococo_config()?),
-			#[cfg(feature = "rococo-native")]
+			#[cfg(feature = "titan-native")]
 			"wococo-dev" => Box::new(service::chain_spec::wococo_development_config()?),
-			#[cfg(feature = "rococo-native")]
+			#[cfg(feature = "titan-native")]
 			"wococo-local" => Box::new(service::chain_spec::wococo_local_testnet_config()?),
-			#[cfg(not(feature = "rococo-native"))]
+			#[cfg(not(feature = "titan-native"))]
 			name if name.starts_with("wococo-") =>
-				Err(format!("`{}` only supported with `rococo-native` feature enabled.", name))?,
+				Err(format!("`{}` only supported with `titan-native` feature enabled.", name))?,
 			path => {
 				let path = std::path::PathBuf::from(path);
 
-				let chain_spec = Box::new(service::diamondChainSpec::from_json_file(path.clone())?)
+				let chain_spec = Box::new(service::DiamondChainSpec::from_json_file(path.clone())?)
 					as Box<dyn service::ChainSpec>;
 
 				// When `force_*` is given or the file name starts with the name of one of the known chains,
 				// we use the chain spec for the specific chain.
-				if self.run.force_rococo || chain_spec.is_rococo() || chain_spec.is_wococo() {
-					Box::new(service::RococoChainSpec::from_json_file(path)?)
+				if self.run.force_titan || chain_spec.is_titan() || chain_spec.is_wococo() {
+					Box::new(service::TitanChainSpec::from_json_file(path)?)
 				} else if self.run.force_gold || chain_spec.is_gold() {
-					Box::new(service::goldChainSpec::from_json_file(path)?)
-				} else if self.run.force_westend || chain_spec.is_westend() {
-					Box::new(service::WestendChainSpec::from_json_file(path)?)
+					Box::new(service::GoldChainSpec::from_json_file(path)?)
+				} else if self.run.force_ruby || chain_spec.is_ruby() {
+					Box::new(service::RubyChainSpec::from_json_file(path)?)
 				} else {
 					chain_spec
 				}
@@ -163,19 +163,19 @@ impl SubstrateCli for Cli {
 			return &service::gold_runtime::VERSION
 		}
 
-		#[cfg(feature = "westend-native")]
-		if spec.is_westend() {
-			return &service::westend_runtime::VERSION
+		#[cfg(feature = "ruby-native")]
+		if spec.is_ruby() {
+			return &service::ruby_runtime::VERSION
 		}
 
-		#[cfg(feature = "rococo-native")]
-		if spec.is_rococo() || spec.is_wococo() {
-			return &service::rococo_runtime::VERSION
+		#[cfg(feature = "titan-native")]
+		if spec.is_titan() || spec.is_wococo() {
+			return &service::titan_runtime::VERSION
 		}
 
 		#[cfg(not(all(
-			feature = "rococo-native",
-			feature = "westend-native",
+			feature = "titan-native",
+			feature = "ruby-native",
 			feature = "gold-native"
 		)))]
 		let _ = spec;
@@ -186,7 +186,7 @@ impl SubstrateCli for Cli {
 		}
 
 		#[cfg(not(feature = "diamond-native"))]
-		panic!("No runtime feature (diamond, gold, westend, rococo) is enabled")
+		panic!("No runtime feature (diamond, gold, ruby, titan) is enabled")
 	}
 }
 
@@ -195,7 +195,7 @@ fn set_default_ss58_version(spec: &Box<dyn service::ChainSpec>) {
 
 	let ss58_version = if spec.is_gold() {
 		Ss58AddressFormat::KusamaAccount
-	} else if spec.is_westend() {
+	} else if spec.is_ruby() {
 		Ss58AddressFormat::SubstrateAccount
 	} else {
 		Ss58AddressFormat::PolkadotAccount
@@ -205,7 +205,7 @@ fn set_default_ss58_version(spec: &Box<dyn service::ChainSpec>) {
 }
 
 const DEV_ONLY_ERROR_PATTERN: &'static str =
-	"can only use subcommand with --chain [diamond-dev, gold-dev, westend-dev, rococo-dev, wococo-dev], got ";
+	"can only use subcommand with --chain [diamond-dev, gold-dev, ruby-dev, titan-dev, wococo-dev], got ";
 
 fn ensure_dev(spec: &Box<dyn service::ChainSpec>) -> std::result::Result<(), String> {
 	if spec.is_dev() {
@@ -295,7 +295,7 @@ pub fn run() -> Result<()> {
 
 			Ok(runner.async_run(|mut config| {
 				let (client, _, _, task_manager) =
-					service::new_chain_ops(&mut config, None).map_err(Error::diamondService)?;
+					service::new_chain_ops(&mut config, None).map_err(Error::DiamondService)?;
 				Ok((cmd.run(client, config.database).map_err(Error::SubstrateCli), task_manager))
 			})?)
 		},
@@ -385,17 +385,17 @@ pub fn run() -> Result<()> {
 			#[cfg(feature = "gold-native")]
 			if chain_spec.is_gold() {
 				return Ok(runner.sync_run(|config| {
-					cmd.run::<service::gold_runtime::Block, service::goldExecutorDispatch>(
+					cmd.run::<service::gold_runtime::Block, service::GoldExecutorDispatch>(
 						config,
 					)
 					.map_err(|e| Error::SubstrateCli(e))
 				})?)
 			}
 
-			#[cfg(feature = "westend-native")]
-			if chain_spec.is_westend() {
+			#[cfg(feature = "ruby-native")]
+			if chain_spec.is_ruby() {
 				return Ok(runner.sync_run(|config| {
-					cmd.run::<service::westend_runtime::Block, service::WestendExecutorDispatch>(
+					cmd.run::<service::ruby_runtime::Block, service::RubyExecutorDispatch>(
 						config,
 					)
 					.map_err(|e| Error::SubstrateCli(e))
@@ -406,14 +406,14 @@ pub fn run() -> Result<()> {
 			#[cfg(feature = "diamond-native")]
 			{
 				return Ok(runner.sync_run(|config| {
-					cmd.run::<service::diamond_runtime::Block, service::diamondExecutorDispatch>(
+					cmd.run::<service::diamond_runtime::Block, service::DiamondExecutorDispatch>(
 						config,
 					)
 					.map_err(|e| Error::SubstrateCli(e))
 				})?)
 			}
 			#[cfg(not(feature = "diamond-native"))]
-			panic!("No runtime feature (diamond, gold, westend, rococo) is enabled")
+			panic!("No runtime feature (diamond, gold, ruby, titan) is enabled")
 		},
 		Some(Subcommand::Key(cmd)) => Ok(cmd.run(&cli)?),
 		#[cfg(feature = "try-runtime")]
@@ -433,7 +433,7 @@ pub fn run() -> Result<()> {
 			if chain_spec.is_gold() {
 				return runner.async_run(|config| {
 					Ok((
-						cmd.run::<service::gold_runtime::Block, service::goldExecutorDispatch>(
+						cmd.run::<service::gold_runtime::Block, service::GoldExecutorDispatch>(
 							config,
 						)
 						.map_err(Error::SubstrateCli),
@@ -442,11 +442,11 @@ pub fn run() -> Result<()> {
 				})
 			}
 
-			#[cfg(feature = "westend-native")]
-			if chain_spec.is_westend() {
+			#[cfg(feature = "ruby-native")]
+			if chain_spec.is_ruby() {
 				return runner.async_run(|config| {
 					Ok((
-						cmd.run::<service::westend_runtime::Block, service::WestendExecutorDispatch>(
+						cmd.run::<service::ruby_runtime::Block, service::RubyExecutorDispatch>(
 							config,
 						)
 						.map_err(Error::SubstrateCli),
@@ -459,7 +459,7 @@ pub fn run() -> Result<()> {
 			{
 				return runner.async_run(|config| {
 					Ok((
-						cmd.run::<service::diamond_runtime::Block, service::diamondExecutorDispatch>(
+						cmd.run::<service::diamond_runtime::Block, service::DiamondExecutorDispatch>(
 							config,
 						)
 						.map_err(Error::SubstrateCli),
@@ -468,7 +468,7 @@ pub fn run() -> Result<()> {
 				})
 			}
 			#[cfg(not(feature = "diamond-native"))]
-			panic!("No runtime feature (diamond, gold, westend, rococo) is enabled")
+			panic!("No runtime feature (diamond, gold, ruby, titan) is enabled")
 		},
 		#[cfg(not(feature = "try-runtime"))]
 		Some(Subcommand::TryRuntime) => Err(Error::Other(

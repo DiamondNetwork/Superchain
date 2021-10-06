@@ -24,16 +24,16 @@ use bp_messages::{LaneId, MessageDetails, MessageNonce, UnrewardedRelayersState}
 use sp_std::prelude::*;
 
 pub use bp_diamond_core::*;
-// Rococo runtime = Wococo runtime
-pub use bp_rococo::{WeightToFee, SESSION_LENGTH, VERSION};
+// titan runtime = Wococo runtime
+pub use bp_titan::{WeightToFee, SESSION_LENGTH, VERSION};
 
 /// Wococo Chain
-pub type Wococo = diamondLike;
+pub type Wococo = DiamondLike;
 
-// We use this to get the account on Wococo (target) which is derived from Rococo's (source)
+// We use this to get the account on Wococo (target) which is derived from titan's (source)
 // account.
-pub fn derive_account_from_rococo_id(id: bp_runtime::SourceAccount<AccountId>) -> AccountId {
-	let encoded_id = bp_runtime::derive_account_id(bp_runtime::ROCOCO_CHAIN_ID, id);
+pub fn derive_account_from_titan_id(id: bp_runtime::SourceAccount<AccountId>) -> AccountId {
+	let encoded_id = bp_runtime::derive_account_id(bp_runtime::TITAN_CHAIN_ID, id);
 	AccountIdConverter::convert(encoded_id)
 }
 

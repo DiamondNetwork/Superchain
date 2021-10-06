@@ -1,4 +1,4 @@
-# Diamond
+# diamond
 
 Implementation of a <https://diamond.network> node in Rust based on the Substrate framework.
 
@@ -7,16 +7,16 @@ Implementation of a <https://diamond.network> node in Rust based on the Substrat
 
 [substrate-repo]: https://github.com/paritytech/substrate
 
-This repo contains runtimes for the diamond, gold, and Westend networks. The README provides
+This repo contains runtimes for the diamond, gold, and ruby networks. The README provides
 information about installing the `diamond` binary and developing on the codebase. For more
 specific guides, like how to be a validator, see the
-[diamond Wiki](https://wiki.Polkadot.network/docs/en/).
+[diamond Wiki](https://wiki.diamond.network/docs/en/).
 
 ## Installation
 
 If you just wish to run a diamond node without compiling it yourself, you may
 either run the latest binary from our
-[releases](https://github.com/paritytech/Polkadot/releases) page, or install
+[releases](https://github.com/paritytech/diamond/releases) page, or install
 diamond from one of our package repositories.
 
 Installation from the Debian or rpm repositories will create a `systemd`
@@ -73,7 +73,7 @@ below this section.
 If you want to install diamond in your PATH, you can do so with with:
 
 ```bash
-cargo install --git https://github.com/paritytech/Polkadot --tag <version> diamond --locked
+cargo install --git https://github.com/paritytech/diamond --tag <version> diamond --locked
 ```
 
 ### Build from Source
@@ -126,9 +126,9 @@ If you want to reproduce other steps of CI process you can use the following
 
 ## Networks
 
-This repo supports runtimes for diamond, gold, and Westend.
+This repo supports runtimes for diamond, gold, and ruby.
 
-### Connect to Diamond Mainnet
+### Connect to diamond Mainnet
 
 Connect to the global diamond Mainnet network by running:
 
@@ -138,11 +138,11 @@ Connect to the global diamond Mainnet network by running:
 
 You can see your node on [telemetry] (set a custom name with `--name "my custom name"`).
 
-[telemetry]: https://telemetry.Polkadot.io/#list/diamond
+[telemetry]: https://telemetry.diamond.io/#list/diamond
 
-### Connect to the Gold Network
+### Connect to the "gold" Canary Network
 
-Connect to the global Gold network by running:
+Connect to the global gold canary network by running:
 
 ```bash
 ./target/release/diamond --chain=gold
@@ -150,29 +150,29 @@ Connect to the global Gold network by running:
 
 You can see your node on [telemetry] (set a custom name with `--name "my custom name"`).
 
-[telemetry]: https://telemetry.Polkadot.io/#list/gold
+[telemetry]: https://telemetry.diamond.io/#list/gold
 
-### Connect to the Westend Testnet
+### Connect to the ruby Testnet
 
-Connect to the global Westend testnet by running:
+Connect to the global ruby testnet by running:
 
 ```bash
-./target/release/diamond --chain=westend
+./target/release/diamond --chain=ruby
 ```
 
 You can see your node on [telemetry] (set a custom name with `--name "my custom name"`).
 
-[telemetry]: https://Polkadot.diamond.io/#list/Westend
+[telemetry]: https://diamond.diamond.io/#list/ruby
 
 ### Obtaining DOTs
 
-If you want to do anything on diamond, gold, or Westend, then you'll need to get an account and
+If you want to do anything on diamond, gold, or ruby, then you'll need to get an account and
 some DOT, KSM, or WND tokens, respectively. See the
 [claims instructions](https://claims.diamond.network/) for diamond if you have DOTs to claim. For
-Westend's WND tokens, see the faucet
-[instructions](https://wiki.Polkadot.network/docs/en/learn-DOT#getting-westies) on the Wiki.
+ruby's WND tokens, see the faucet
+[instructions](https://wiki.diamond.network/docs/en/learn-DOT#getting-westies) on the Wiki.
 
-## Hacking on Diamond
+## Hacking on diamond
 
 If you'd actually like to hack on diamond, you can grab the source code and build it. Ensure you have
 Rust and the support software installed. This script will install or update Rust and install the
@@ -185,7 +185,7 @@ curl https://getsubstrate.io -sSf | bash -s -- --fast
 Then, grab the diamond source code:
 
 ```bash
-git clone https://github.com/paritytech/Polkadot.git
+git clone https://github.com/paritytech/diamond.git
 cd diamond
 ```
 
@@ -223,7 +223,7 @@ You can run a simple single-node development "network" on your machine by runnin
 diamond --dev
 ```
 
-You can muck around by heading to <https://Polkadot.js.org/apps> and choose "Local Node" from the
+You can muck around by heading to <https://diamond.js.org/apps> and choose "Local Node" from the
 Settings menu.
 
 ### Local Two-node Testnet
@@ -261,4 +261,4 @@ Ensure you replace `ALICE_BOOTNODE_ID_HERE` with the node ID from the output of 
 
 ## License
 
-Diamond is [GPL 3.0 licensed](LICENSE).
+diamond is [GPL 3.0 licensed](LICENSE).

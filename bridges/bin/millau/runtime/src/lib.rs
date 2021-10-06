@@ -63,7 +63,7 @@ pub use frame_support::{
 pub use frame_system::Call as SystemCall;
 pub use pallet_balances::Call as BalancesCall;
 pub use pallet_bridge_grandpa::Call as BridgeGrandpaRialtoCall;
-pub use pallet_bridge_grandpa::Call as BridgeGrandpaWestendCall;
+pub use pallet_bridge_grandpa::Call as BridgeGrandparubyCall;
 pub use pallet_bridge_messages::Call as MessagesCall;
 pub use pallet_sudo::Call as SudoCall;
 pub use pallet_timestamp::Call as TimestampCall;
@@ -336,9 +336,9 @@ impl pallet_bridge_grandpa::Config for Runtime {
 	type WeightInfo = pallet_bridge_grandpa::weights::RialtoWeight<Runtime>;
 }
 
-pub type WestendGrandpaInstance = pallet_bridge_grandpa::Instance1;
-impl pallet_bridge_grandpa::Config<WestendGrandpaInstance> for Runtime {
-	type BridgedChain = bp_westend::Westend;
+pub type rubyGrandpaInstance = pallet_bridge_grandpa::Instance1;
+impl pallet_bridge_grandpa::Config<rubyGrandpaInstance> for Runtime {
+	type BridgedChain = bp_ruby::ruby;
 	type MaxRequests = MaxRequests;
 	type HeadersToKeep = HeadersToKeep;
 
@@ -404,7 +404,7 @@ construct_runtime!(
 		BridgeRialtoMessages: pallet_bridge_messages::{Pallet, Call, Storage, Event<T>},
 		BridgeDispatch: pallet_bridge_dispatch::{Pallet, Event<T>},
 		BridgeRialtoGrandpa: pallet_bridge_grandpa::{Pallet, Call, Storage},
-		BridgeWestendGrandpa: pallet_bridge_grandpa::<Instance1>::{Pallet, Call, Config<T>, Storage},
+		BridgerubyGrandpa: pallet_bridge_grandpa::<Instance1>::{Pallet, Call, Config<T>, Storage},
 		System: frame_system::{Pallet, Call, Config, Storage, Event<T>},
 		RandomnessCollectiveFlip: pallet_randomness_collective_flip::{Pallet, Storage},
 		Timestamp: pallet_timestamp::{Pallet, Call, Storage, Inherent},
@@ -588,14 +588,14 @@ impl_runtime_apis! {
 		}
 	}
 
-	impl bp_westend::WestendFinalityApi<Block> for Runtime {
-		fn best_finalized() -> (bp_westend::BlockNumber, bp_westend::Hash) {
-			let header = BridgeWestendGrandpa::best_finalized();
+	impl bp_ruby::rubyFinalityApi<Block> for Runtime {
+		fn best_finalized() -> (bp_ruby::BlockNumber, bp_ruby::Hash) {
+			let header = BridgerubyGrandpa::best_finalized();
 			(header.number, header.hash())
 		}
 
-		fn is_known_header(hash: bp_westend::Hash) -> bool {
-			BridgeWestendGrandpa::is_known_header(hash)
+		fn is_known_header(hash: bp_ruby::Hash) -> bool {
+			BridgerubyGrandpa::is_known_header(hash)
 		}
 	}
 

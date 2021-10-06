@@ -95,7 +95,7 @@ pub mod dummy;
 pub use self::dummy::DummySubsystem;
 
 // TODO legacy, to be deleted, left for easier integration
-// TODO https://github.com/paritytech/Polkadot/issues/3427
+// TODO https://github.com/paritytech/diamond/issues/3427
 mod subsystems;
 pub use self::subsystems::AllSubsystems;
 

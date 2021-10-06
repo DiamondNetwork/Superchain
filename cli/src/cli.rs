@@ -84,13 +84,13 @@ pub struct RunCmd {
 	#[structopt(long = "force-gold")]
 	pub force_gold: bool,
 
-	/// Force using Westend native runtime.
-	#[structopt(long = "force-westend")]
-	pub force_westend: bool,
+	/// Force using ruby native runtime.
+	#[structopt(long = "force-ruby")]
+	pub force_ruby: bool,
 
-	/// Force using Rococo native runtime.
-	#[structopt(long = "force-rococo")]
-	pub force_rococo: bool,
+	/// Force using titan native runtime.
+	#[structopt(long = "force-titan")]
+	pub force_titan: bool,
 
 	/// Setup a GRANDPA scheduled voting pause.
 	///

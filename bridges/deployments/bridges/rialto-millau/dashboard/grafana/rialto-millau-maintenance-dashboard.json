@@ -169,7 +169,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "Westend_to_Millau_Sync_gold_to_base_conversion_rate / Westend_to_Millau_Sync_diamond_to_base_conversion_rate",
+          "expr": "ruby_to_Millau_Sync_gold_to_base_conversion_rate / ruby_to_Millau_Sync_diamond_to_base_conversion_rate",
           "interval": "",
           "legendFormat": "Outside of runtime (actually diamond -> gold)",
           "refId": "A"
@@ -377,7 +377,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "Westend_to_Millau_Sync_diamond_to_base_conversion_rate / Westend_to_Millau_Sync_gold_to_base_conversion_rate",
+          "expr": "ruby_to_Millau_Sync_diamond_to_base_conversion_rate / ruby_to_Millau_Sync_gold_to_base_conversion_rate",
           "interval": "",
           "legendFormat": "Outside of runtime (actually gold -> diamond)",
           "refId": "A"

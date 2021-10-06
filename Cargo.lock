@@ -791,22 +791,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "bp-rococo"
-version = "0.1.0"
-dependencies = [
- "bp-diamond-core",
- "bp-messages",
- "bp-runtime",
- "frame-support",
- "parity-scale-codec",
- "smallvec",
- "sp-api",
- "sp-runtime",
- "sp-std",
- "sp-version",
-]
-
-[[package]]
 name = "bp-runtime"
 version = "0.1.0"
 dependencies = [
@@ -838,13 +822,29 @@ dependencies = [
 ]
 
 [[package]]
+name = "bp-titan"
+version = "0.1.0"
+dependencies = [
+ "bp-diamond-core",
+ "bp-messages",
+ "bp-runtime",
+ "frame-support",
+ "parity-scale-codec",
+ "smallvec",
+ "sp-api",
+ "sp-runtime",
+ "sp-std",
+ "sp-version",
+]
+
+[[package]]
 name = "bp-wococo"
 version = "0.1.0"
 dependencies = [
  "bp-diamond-core",
  "bp-messages",
- "bp-rococo",
  "bp-runtime",
+ "bp-titan",
  "parity-scale-codec",
  "sp-api",
  "sp-runtime",
@@ -1645,7 +1645,7 @@ dependencies = [
  "gold-runtime",
  "pallet-mmr-primitives",
  "pallet-transaction-payment-rpc-runtime-api",
- "rococo-runtime",
+ "ruby-runtime",
  "sc-client-api",
  "sc-consensus",
  "sc-executor",
@@ -1662,7 +1662,7 @@ dependencies = [
  "sp-session",
  "sp-storage",
  "sp-transaction-pool",
- "westend-runtime",
+ "titan-runtime",
 ]
 
 [[package]]
@@ -2607,7 +2607,7 @@ dependencies = [
  "pallet-mmr-primitives",
  "pallet-staking",
  "pallet-transaction-payment-rpc-runtime-api",
- "rococo-runtime",
+ "ruby-runtime",
  "sc-authority-discovery",
  "sc-basic-authorship",
  "sc-block-builder",
@@ -2648,8 +2648,8 @@ dependencies = [
  "sp-trie",
  "substrate-prometheus-endpoint",
  "thiserror",
+ "titan-runtime",
  "tracing",
- "westend-runtime",
 ]
 
 [[package]]
@@ -2914,9 +2914,9 @@ dependencies = [
  "diamond-runtime",
  "generate-bags",
  "gold-runtime",
+ "ruby-runtime",
  "sp-io",
  "structopt",
- "westend-runtime",
 ]
 
 [[package]]
@@ -7850,54 +7850,76 @@ dependencies = [
 ]
 
 [[package]]
-name = "rococo-runtime"
+name = "rpassword"
+version = "5.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d755237fc0f99d98641540e66abac8bc46a0652f19148ac9e21de2da06b326c9"
+dependencies = [
+ "libc",
+ "winapi 0.3.9",
+]
+
+[[package]]
+name = "ruby-runtime"
 version = "0.9.9"
 dependencies = [
  "beefy-primitives",
- "bp-messages",
- "bp-rococo",
- "bp-runtime",
- "bp-wococo",
- "bridge-runtime-common",
+ "bitvec 0.20.1",
  "diamond-parachain",
  "diamond-primitives",
  "diamond-runtime-common",
  "diamond-runtime-parachains",
+ "frame-benchmarking",
+ "frame-election-provider-support",
  "frame-executive",
  "frame-support",
  "frame-system",
+ "frame-system-benchmarking",
  "frame-system-rpc-runtime-api",
+ "frame-try-runtime",
+ "hex-literal",
  "log",
  "pallet-authority-discovery",
  "pallet-authorship",
  "pallet-babe",
+ "pallet-bags-list",
  "pallet-balances",
- "pallet-beefy",
- "pallet-beefy-mmr",
- "pallet-bridge-dispatch",
- "pallet-bridge-grandpa",
- "pallet-bridge-messages",
  "pallet-collective",
+ "pallet-democracy",
+ "pallet-election-provider-multi-phase",
+ "pallet-elections-phragmen",
  "pallet-grandpa",
+ "pallet-identity",
  "pallet-im-online",
  "pallet-indices",
  "pallet-membership",
- "pallet-mmr",
  "pallet-mmr-primitives",
+ "pallet-multisig",
+ "pallet-nicks",
  "pallet-offences",
+ "pallet-offences-benchmarking",
  "pallet-proxy",
+ "pallet-recovery",
+ "pallet-scheduler",
  "pallet-session",
+ "pallet-session-benchmarking",
+ "pallet-society",
  "pallet-staking",
+ "pallet-staking-reward-curve",
  "pallet-sudo",
  "pallet-timestamp",
  "pallet-transaction-payment",
  "pallet-transaction-payment-rpc-runtime-api",
+ "pallet-treasury",
  "pallet-utility",
+ "pallet-vesting",
  "pallet-xcm",
  "parity-scale-codec",
+ "rustc-hex",
  "scale-info",
  "serde",
  "serde_derive",
+ "serde_json",
  "smallvec",
  "sp-api",
  "sp-authority-discovery",
@@ -7906,27 +7928,21 @@ dependencies = [
  "sp-core",
  "sp-inherents",
  "sp-io",
+ "sp-keyring",
+ "sp-npos-elections",
  "sp-offchain",
  "sp-runtime",
  "sp-session",
  "sp-staking",
  "sp-std",
  "sp-transaction-pool",
+ "sp-trie",
  "sp-version",
  "substrate-wasm-builder",
+ "tiny-keccak",
  "xcm",
  "xcm-builder",
  "xcm-executor",
-]
-
-[[package]]
-name = "rpassword"
-version = "5.0.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d755237fc0f99d98641540e66abac8bc46a0652f19148ac9e21de2da06b326c9"
-dependencies = [
- "libc",
- "winapi 0.3.9",
 ]
 
 [[package]]
@@ -10095,6 +10111,7 @@ dependencies = [
  "parity-scale-codec",
  "paste 1.0.5",
  "remote-externalities",
+ "ruby-runtime",
  "sc-transaction-pool-api",
  "serde",
  "serde_json",
@@ -10107,7 +10124,6 @@ dependencies = [
  "sub-tokens",
  "thiserror",
  "tokio",
- "westend-runtime",
 ]
 
 [[package]]
@@ -10654,6 +10670,76 @@ name = "tinyvec_macros"
 version = "0.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "cda74da7e1a664f795bb1f8a87ec406fb89a02522cf6e50620d016add6dbbf5c"
+
+[[package]]
+name = "titan-runtime"
+version = "0.9.9"
+dependencies = [
+ "beefy-primitives",
+ "bp-messages",
+ "bp-runtime",
+ "bp-titan",
+ "bp-wococo",
+ "bridge-runtime-common",
+ "diamond-parachain",
+ "diamond-primitives",
+ "diamond-runtime-common",
+ "diamond-runtime-parachains",
+ "frame-executive",
+ "frame-support",
+ "frame-system",
+ "frame-system-rpc-runtime-api",
+ "log",
+ "pallet-authority-discovery",
+ "pallet-authorship",
+ "pallet-babe",
+ "pallet-balances",
+ "pallet-beefy",
+ "pallet-beefy-mmr",
+ "pallet-bridge-dispatch",
+ "pallet-bridge-grandpa",
+ "pallet-bridge-messages",
+ "pallet-collective",
+ "pallet-grandpa",
+ "pallet-im-online",
+ "pallet-indices",
+ "pallet-membership",
+ "pallet-mmr",
+ "pallet-mmr-primitives",
+ "pallet-offences",
+ "pallet-proxy",
+ "pallet-session",
+ "pallet-staking",
+ "pallet-sudo",
+ "pallet-timestamp",
+ "pallet-transaction-payment",
+ "pallet-transaction-payment-rpc-runtime-api",
+ "pallet-utility",
+ "pallet-xcm",
+ "parity-scale-codec",
+ "scale-info",
+ "serde",
+ "serde_derive",
+ "smallvec",
+ "sp-api",
+ "sp-authority-discovery",
+ "sp-block-builder",
+ "sp-consensus-babe",
+ "sp-core",
+ "sp-inherents",
+ "sp-io",
+ "sp-offchain",
+ "sp-runtime",
+ "sp-session",
+ "sp-staking",
+ "sp-std",
+ "sp-transaction-pool",
+ "sp-version",
+ "substrate-wasm-builder",
+ "xcm",
+ "xcm-builder",
+ "xcm-executor",
+]
 
 [[package]]
 name = "tokio"
@@ -11518,92 +11604,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0fcb14dea929042224824779fbc82d9fab8d2e6d3cbc0ac404de8edf489e77ff"
 dependencies = [
  "cc",
-]
-
-[[package]]
-name = "westend-runtime"
-version = "0.9.9"
-dependencies = [
- "beefy-primitives",
- "bitvec 0.20.1",
- "diamond-parachain",
- "diamond-primitives",
- "diamond-runtime-common",
- "diamond-runtime-parachains",
- "frame-benchmarking",
- "frame-election-provider-support",
- "frame-executive",
- "frame-support",
- "frame-system",
- "frame-system-benchmarking",
- "frame-system-rpc-runtime-api",
- "frame-try-runtime",
- "hex-literal",
- "log",
- "pallet-authority-discovery",
- "pallet-authorship",
- "pallet-babe",
- "pallet-bags-list",
- "pallet-balances",
- "pallet-collective",
- "pallet-democracy",
- "pallet-election-provider-multi-phase",
- "pallet-elections-phragmen",
- "pallet-grandpa",
- "pallet-identity",
- "pallet-im-online",
- "pallet-indices",
- "pallet-membership",
- "pallet-mmr-primitives",
- "pallet-multisig",
- "pallet-nicks",
- "pallet-offences",
- "pallet-offences-benchmarking",
- "pallet-proxy",
- "pallet-recovery",
- "pallet-scheduler",
- "pallet-session",
- "pallet-session-benchmarking",
- "pallet-society",
- "pallet-staking",
- "pallet-staking-reward-curve",
- "pallet-sudo",
- "pallet-timestamp",
- "pallet-transaction-payment",
- "pallet-transaction-payment-rpc-runtime-api",
- "pallet-treasury",
- "pallet-utility",
- "pallet-vesting",
- "pallet-xcm",
- "parity-scale-codec",
- "rustc-hex",
- "scale-info",
- "serde",
- "serde_derive",
- "serde_json",
- "smallvec",
- "sp-api",
- "sp-authority-discovery",
- "sp-block-builder",
- "sp-consensus-babe",
- "sp-core",
- "sp-inherents",
- "sp-io",
- "sp-keyring",
- "sp-npos-elections",
- "sp-offchain",
- "sp-runtime",
- "sp-session",
- "sp-staking",
- "sp-std",
- "sp-transaction-pool",
- "sp-trie",
- "sp-version",
- "substrate-wasm-builder",
- "tiny-keccak",
- "xcm",
- "xcm-builder",
- "xcm-executor",
 ]
 
 [[package]]

@@ -16,7 +16,7 @@
 
 use bp_millau::derive_account_from_rialto_id;
 use millau_runtime::{
-	AccountId, AuraConfig, BalancesConfig, BridgeWestendGrandpaConfig, GenesisConfig, GrandpaConfig, SessionConfig,
+	AccountId, AuraConfig, BalancesConfig, BridgerubyGrandpaConfig, GenesisConfig, GrandpaConfig, SessionConfig,
 	SessionKeys, Signature, SudoConfig, SystemConfig, WASM_BINARY,
 };
 use sp_consensus_aura::sr25519::AuthorityId as AuraId;
@@ -204,10 +204,10 @@ fn testnet_genesis(
 				.map(|x| (x.0.clone(), x.0.clone(), session_keys(x.1.clone(), x.2.clone())))
 				.collect::<Vec<_>>(),
 		},
-		bridge_westend_grandpa: BridgeWestendGrandpaConfig {
+		bridge_ruby_grandpa: BridgerubyGrandpaConfig {
 			// for our deployments to avoid multiple same-nonces transactions:
 			// //Alice is already used to initialize Rialto<->Millau bridge
-			// => let's use //George to initialize Westend->Millau bridge
+			// => let's use //George to initialize ruby->Millau bridge
 			owner: Some(get_account_id_from_seed::<sr25519::Public>("George")),
 			..Default::default()
 		},

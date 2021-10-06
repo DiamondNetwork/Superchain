@@ -76,7 +76,7 @@ backers, not all of them are required to have the needed chunk. This in turn
 could lead to low throughput, as we have to wait for fetches to fail,
 before reaching a validator finally having our chunk. We do rank back validators
 not delivering our chunk, but as backers could vary from block to block on a
-perfectly legitimate basis, this is still not ideal. See issues [2509](https://github.com/paritytech/Polkadot/issues/2509) and [2512](https://github.com/paritytech/Polkadot/issues/2512)
+perfectly legitimate basis, this is still not ideal. See issues [2509](https://github.com/paritytech/diamond/issues/2509) and [2512](https://github.com/paritytech/diamond/issues/2512)
 for more information.
 
 The current implementation also only fetches chunks for occupied cores in blocks
@@ -84,7 +84,7 @@ in active leaves. This means though, if active leaves skips a block or we are
 particularly slow in fetching our chunk, we might not fetch our chunk if
 availability reached 2/3 fast enough (slot becomes free). This is not desirable
 as we would like as many validators as possible to have their chunk. See this
-[issue](https://github.com/paritytech/Polkadot/issues/2513) for more details.
+[issue](https://github.com/paritytech/diamond/issues/2513) for more details.
 
 
 ### Serving

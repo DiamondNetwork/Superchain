@@ -16,7 +16,7 @@
 # `./run.sh rialto-millau stop`
 #
 # Stopping the bridge will also bring down all networks that it uses. So if you have started multiple bridges
-# that are using the same network (like Millau in rialto-millau and westend-millau bridges), then stopping one
+# that are using the same network (like Millau in rialto-millau and ruby-millau bridges), then stopping one
 # of these bridges will cause the other bridge to break.
 
 set -xeu
@@ -32,13 +32,13 @@ function show_help () {
   echo "Usage:"
   echo "  ./run.sh poa-rialto [stop|update]          Run PoA <> Rialto Networks & Bridge"
   echo "  ./run.sh rialto-millau [stop|update]       Run Rialto <> Millau Networks & Bridge"
-  echo "  ./run.sh westend-millau [stop|update]      Run Westend -> Millau Networks & Bridge"
+  echo "  ./run.sh ruby-millau [stop|update]      Run ruby -> Millau Networks & Bridge"
   echo " "
   echo "Options:"
   echo "  --no-monitoring                            Disable monitoring"
   echo " "
   echo "You can start multiple bridges at once by passing several bridge names:"
-  echo "  ./run.sh poa-rialto rialto-millau westend-millau [stop|update]"
+  echo "  ./run.sh poa-rialto rialto-millau ruby-millau [stop|update]"
   exit 1
 }
 
@@ -74,7 +74,7 @@ do
       MILLAU=''
       shift
       ;;
-    westend-millau)
+    ruby-millau)
       BRIDGES+=($i)
       NETWORKS+=${MILLAU}
       MILLAU=''

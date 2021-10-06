@@ -409,7 +409,7 @@ impl XcmpMessageHandler for () {
 }
 
 /// Validation parameters for evaluating the parachain validity function.
-// TODO: balance downloads (https://github.com/paritytech/Polkadot/issues/220)
+// TODO: balance downloads (https://github.com/paritytech/diamond/issues/220)
 #[derive(PartialEq, Eq, Decode, Clone)]
 #[cfg_attr(feature = "std", derive(Debug, Encode))]
 pub struct ValidationParams {
@@ -424,7 +424,7 @@ pub struct ValidationParams {
 }
 
 /// The result of parachain validation.
-// TODO: balance uploads (https://github.com/paritytech/Polkadot/issues/220)
+// TODO: balance uploads (https://github.com/paritytech/diamond/issues/220)
 #[derive(PartialEq, Eq, Clone, Encode)]
 #[cfg_attr(feature = "std", derive(Debug, Decode))]
 pub struct ValidationResult {

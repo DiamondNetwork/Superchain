@@ -20,16 +20,16 @@ pub mod millau_headers_to_rialto;
 pub mod millau_messages_to_rialto;
 pub mod rialto_headers_to_millau;
 pub mod rialto_messages_to_millau;
-pub mod rococo_headers_to_wococo;
-pub mod rococo_messages_to_wococo;
-pub mod westend_headers_to_millau;
-pub mod wococo_headers_to_rococo;
-pub mod wococo_messages_to_rococo;
+pub mod titan_headers_to_wococo;
+pub mod titan_messages_to_wococo;
+pub mod ruby_headers_to_millau;
+pub mod wococo_headers_to_titan;
+pub mod wococo_messages_to_titan;
 
 mod millau;
 mod rialto;
-mod rococo;
-mod westend;
+mod titan;
+mod ruby;
 mod wococo;
 
 use relay_utils::metrics::{FloatJsonValueMetric, MetricsParams};
@@ -248,7 +248,7 @@ mod tests {
 }
 
 #[cfg(test)]
-mod rococo_tests {
+mod titan_tests {
 	use bp_header_chain::justification::GrandpaJustification;
 	use codec::Encode;
 
@@ -273,7 +273,7 @@ mod rococo_tests {
 			votes_ancestries: vec![],
 		};
 
-		let actual = relay_rococo_client::runtime::BridgeGrandpaWococoCall::submit_finality_proof(
+		let actual = relay_titan_client::runtime::BridgeGrandpaWococoCall::submit_finality_proof(
 			header.clone(),
 			justification.clone(),
 		);
@@ -296,7 +296,7 @@ mod rococo_tests {
 }
 
 #[cfg(test)]
-mod westend_tests {
+mod ruby_tests {
 	use bp_header_chain::justification::GrandpaJustification;
 	use codec::Encode;
 
@@ -321,7 +321,7 @@ mod westend_tests {
 			votes_ancestries: vec![],
 		};
 
-		let actual = bp_westend::BridgeGrandpaRococoCall::submit_finality_proof(header.clone(), justification.clone());
+		let actual = bp_ruby::BridgeGrandpatitanCall::submit_finality_proof(header.clone(), justification.clone());
 		let expected = millau_runtime::BridgeGrandpaRialtoCall::<millau_runtime::Runtime>::submit_finality_proof(
 			header,
 			justification,

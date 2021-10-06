@@ -8,7 +8,7 @@ Since, at least at the level of the para abstraction, the collator-set for any g
 
 Validation of candidates is a heavy task, and furthermore, the [`PoV`][PoV] itself is a large piece of data. Empirically, `PoV`s are on the order of 10MB.
 
-> TODO: note the incremental validation function Ximin proposes at https://github.com/paritytech/Polkadot/issues/1348
+> TODO: note the incremental validation function Ximin proposes at https://github.com/paritytech/diamond/issues/1348
 
 As this network protocol serves as a bridge between collators and validators, it communicates primarily with one subsystem on behalf of each. As a collator, this will receive messages from the [`CollationGeneration`][CG] subsystem. As a validator, this will communicate only with the [`CandidateBacking`][CB].
 

@@ -22,21 +22,21 @@ use bp_runtime::Chain;
 use codec::{Decode, Encode};
 use frame_support::weights::Weight;
 
-/// Instance of messages pallet that is used to bridge with Rococo chain.
-pub type WithRococoMessagesInstance = pallet_bridge_messages::DefaultInstance;
+/// Instance of messages pallet that is used to bridge with titan chain.
+pub type WithtitanMessagesInstance = pallet_bridge_messages::DefaultInstance;
 
 /// Unchecked Wococo extrinsic.
 pub type UncheckedExtrinsic = bp_diamond_core::UncheckedExtrinsic<Call>;
 
-/// Rococo account ownership digest from Wococo.
+/// titan account ownership digest from Wococo.
 ///
-/// The byte vector returned by this function should be signed with a Rococo account private key.
-/// This way, the owner of `wococo_account_id` on Rococo proves that the Rococo account private key
+/// The byte vector returned by this function should be signed with a titan account private key.
+/// This way, the owner of `wococo_account_id` on titan proves that the titan account private key
 /// is also under his control.
-pub fn wococo_to_rococo_account_ownership_digest<Call, AccountId, SpecVersion>(
-	rococo_call: &Call,
+pub fn wococo_to_titan_account_ownership_digest<Call, AccountId, SpecVersion>(
+	titan_call: &Call,
 	wococo_account_id: AccountId,
-	rococo_spec_version: SpecVersion,
+	titan_spec_version: SpecVersion,
 ) -> Vec<u8>
 where
 	Call: codec::Encode,
@@ -44,36 +44,36 @@ where
 	SpecVersion: codec::Encode,
 {
 	pallet_bridge_dispatch::account_ownership_digest(
-		rococo_call,
+		titan_call,
 		wococo_account_id,
-		rococo_spec_version,
+		titan_spec_version,
 		bp_runtime::WOCOCO_CHAIN_ID,
-		bp_runtime::ROCOCO_CHAIN_ID,
+		bp_runtime::TITAN_CHAIN_ID,
 	)
 }
 
 /// Wococo Runtime `Call` enum.
 ///
-/// The enum represents a subset of possible `Call`s we can send to Rococo chain.
+/// The enum represents a subset of possible `Call`s we can send to titan chain.
 /// Ideally this code would be auto-generated from Metadata, because we want to
 /// avoid depending directly on the ENTIRE runtime just to get the encoding of `Dispatchable`s.
 ///
-/// All entries here (like pretty much in the entire file) must be kept in sync with Rococo
+/// All entries here (like pretty much in the entire file) must be kept in sync with titan
 /// `construct_runtime`, so that we maintain SCALE-compatibility.
 ///
-/// See: https://github.com/paritytech/Polkadot/blob/master/runtime/rococo/src/lib.rs
+/// See: https://github.com/paritytech/diamond/blob/master/runtime/titan/src/lib.rs
 #[allow(clippy::large_enum_variant)]
 #[derive(Encode, Decode, Debug, PartialEq, Eq, Clone)]
 pub enum Call {
 	/// System pallet.
 	#[codec(index = 0)]
 	System(SystemCall),
-	/// Rococo bridge pallet.
+	/// titan bridge pallet.
 	#[codec(index = 40)]
-	BridgeGrandpaRococo(BridgeGrandpaRococoCall),
-	/// Rococo messages pallet.
+	BridgeGrandpatitan(BridgeGrandpatitanCall),
+	/// titan messages pallet.
 	#[codec(index = 43)]
-	BridgeMessagesRococo(BridgeMessagesRococoCall),
+	BridgeMessagestitan(BridgeMessagestitanCall),
 }
 
 #[derive(Encode, Decode, Debug, PartialEq, Eq, Clone)]
@@ -85,7 +85,7 @@ pub enum SystemCall {
 
 #[derive(Encode, Decode, Debug, PartialEq, Eq, Clone)]
 #[allow(non_camel_case_types)]
-pub enum BridgeGrandpaRococoCall {
+pub enum BridgeGrandpatitanCall {
 	#[codec(index = 0)]
 	submit_finality_proof(
 		<diamondLike as Chain>::Header,
@@ -97,28 +97,28 @@ pub enum BridgeGrandpaRococoCall {
 
 #[derive(Encode, Decode, Debug, PartialEq, Eq, Clone)]
 #[allow(non_camel_case_types)]
-pub enum BridgeMessagesRococoCall {
+pub enum BridgeMessagestitanCall {
 	#[codec(index = 3)]
 	send_message(
 		LaneId,
 		bp_message_dispatch::MessagePayload<
-			bp_rococo::AccountId,
+			bp_titan::AccountId,
 			bp_wococo::AccountId,
 			bp_wococo::AccountPublic,
 			Vec<u8>,
 		>,
-		bp_rococo::Balance,
+		bp_titan::Balance,
 	),
 	#[codec(index = 5)]
 	receive_messages_proof(
-		bp_rococo::AccountId,
-		bridge_runtime_common::messages::target::FromBridgedChainMessagesProof<bp_rococo::Hash>,
+		bp_titan::AccountId,
+		bridge_runtime_common::messages::target::FromBridgedChainMessagesProof<bp_titan::Hash>,
 		u32,
 		Weight,
 	),
 	#[codec(index = 6)]
 	receive_messages_delivery_proof(
-		bridge_runtime_common::messages::source::FromBridgedChainMessagesDeliveryProof<bp_rococo::Hash>,
+		bridge_runtime_common::messages::source::FromBridgedChainMessagesDeliveryProof<bp_titan::Hash>,
 		UnrewardedRelayersState,
 	),
 }

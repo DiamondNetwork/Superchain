@@ -10,10 +10,10 @@ LABEL io.parity.image.authors="devops-team@parity.io" \
 	io.parity.image.vendor="Parity Technologies" \
 	io.parity.image.title="${IMAGE_NAME}" \
 	io.parity.image.description="adder-collator image" \
-	io.parity.image.source="https://github.com/paritytech/Polkadot/blob/${VCS_REF}/scripts/docker/collator.Dockerfile" \
+	io.parity.image.source="https://github.com/paritytech/diamond/blob/${VCS_REF}/scripts/docker/collator.Dockerfile" \
 	io.parity.image.revision="${VCS_REF}" \
 	io.parity.image.created="${BUILD_DATE}" \
-	io.parity.image.documentation="https://github.com/paritytech/Polkadot/"
+	io.parity.image.documentation="https://github.com/paritytech/diamond/"
 
 # show backtraces
 ENV RUST_BACKTRACE 1

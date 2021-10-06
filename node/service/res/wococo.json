@@ -7,7 +7,7 @@
   ],
   "telemetryEndpoints": [
     [
-      "/dns/telemetry.Polkadot.io/tcp/443/x-parity-wss/%2Fsubmit%2F",
+      "/dns/telemetry.diamond.io/tcp/443/x-parity-wss/%2Fsubmit%2F",
       0
     ]
   ],

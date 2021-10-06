@@ -290,7 +290,7 @@ pub(crate) fn impl_builder(info: &OverseerInfo) -> proc_macro2::TokenStream {
 
 				#(
 					// TODO generate a builder pattern that ensures this
-					// TODO https://github.com/paritytech/Polkadot/issues/3427
+					// TODO https://github.com/paritytech/diamond/issues/3427
 					let #subsystem_name = match self. #subsystem_name {
 						 FieldInitMethod::Fn(func) => func(handle.clone())?,
 						FieldInitMethod::Value(val) => val,

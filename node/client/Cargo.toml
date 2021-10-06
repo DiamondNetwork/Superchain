@@ -34,8 +34,8 @@ beefy-primitives = { git = "https://github.com/paritytech/grandpa-bridge-gadget"
 # diamond Runtimes
 diamond-runtime = { path = "../../runtime/diamond", optional = true }
 gold-runtime = { path = "../../runtime/gold", optional = true }
-westend-runtime = { path = "../../runtime/westend", optional = true }
-rococo-runtime = { path = "../../runtime/rococo", optional = true }
+ruby-runtime = { path = "../../runtime/ruby", optional = true }
+titan-runtime = { path = "../../runtime/titan", optional = true }
 
 diamond-primitives = { path = "../../primitives" }
 
@@ -43,5 +43,5 @@ diamond-primitives = { path = "../../primitives" }
 default = ["diamond"]
 diamond = ["diamond-runtime"]
 gold = ["gold-runtime"]
-rococo = ["rococo-runtime"]
-westend = ["westend-runtime"]
+titan = ["titan-runtime"]
+ruby = ["ruby-runtime"]

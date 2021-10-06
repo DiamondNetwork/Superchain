@@ -64,8 +64,8 @@ try-runtime = [ "service/try-runtime" ]
 # Validators require the native runtime currently
 diamond-native = [ "service/diamond-native" ]
 gold-native = [ "service/gold-native" ]
-westend-native = [ "service/westend-native" ]
-rococo-native = [ "service/rococo-native" ]
+ruby-native = [ "service/ruby-native" ]
+titan-native = [ "service/titan-native" ]
 
 malus = [ "full-node", "service/malus" ]
 disputes = [ "service/disputes" ]

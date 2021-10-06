@@ -1,0 +1,12 @@
+{
+	"--1": "titan Types",
+	"titanBalance": "u128",
+	"titanBlockHash": "H256",
+	"titanBlockNumber": "u32",
+	"titanHeader": "Header",
+	"--2": "Wococo Types",
+	"WococoBalance": "titanBalance",
+	"WococoBlockHash": "titanBlockHash",
+	"WococoBlockNumber": "titanBlockNumber",
+	"WococoHeader": "titanHeader"
+}

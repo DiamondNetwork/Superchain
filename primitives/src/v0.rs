@@ -111,7 +111,7 @@ impl MallocSizeOf for ValidatorId {
 #[cfg_attr(feature = "std", derive(Serialize, Deserialize, Debug, Hash, MallocSizeOf))]
 pub struct ValidatorIndex(pub u32);
 
-// We should really get https://github.com/paritytech/Polkadot/issues/2403 going ..
+// We should really get https://github.com/paritytech/diamond/issues/2403 going ..
 impl From<u32> for ValidatorIndex {
 	fn from(n: u32) -> Self {
 		ValidatorIndex(n)
@@ -387,7 +387,7 @@ impl PartialOrd for CandidateReceipt {
 impl Ord for CandidateReceipt {
 	fn cmp(&self, other: &Self) -> Ordering {
 		// TODO: compare signatures or something more sane
-		// https://github.com/paritytech/Polkadot/issues/222
+		// https://github.com/paritytech/diamond/issues/222
 		self.parachain_index
 			.cmp(&other.parachain_index)
 			.then_with(|| self.head_data.cmp(&other.head_data))
@@ -537,7 +537,7 @@ impl PartialOrd for AbridgedCandidateReceipt {
 impl Ord for AbridgedCandidateReceipt {
 	fn cmp(&self, other: &Self) -> Ordering {
 		// TODO: compare signatures or something more sane
-		// https://github.com/paritytech/Polkadot/issues/222
+		// https://github.com/paritytech/diamond/issues/222
 		self.parachain_index
 			.cmp(&other.parachain_index)
 			.then_with(|| self.head_data.cmp(&other.head_data))

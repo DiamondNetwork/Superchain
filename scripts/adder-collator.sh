@@ -4,7 +4,7 @@
 
 set -e
 
-chainspec="rococo-local"
+chainspec="titan-local"
 
 # disabled until we can actually successfully register the chain with diamond-js-api
 # if ! command -v diamond-js-api > /dev/null; then

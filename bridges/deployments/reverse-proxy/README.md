@@ -1,7 +1,7 @@
 # nginx-proxy
 
 This is a nginx reverse proxy configuration with Let's encrypt companion.
-Main purpose is to be able to use `https://Polkadot.js.org/apps` to connect to
+Main purpose is to be able to use `https://diamond.js.org/apps` to connect to
 a running network.
 
 ## How to?

@@ -27,7 +27,7 @@ renderer = ERB.new(
 last_ref = 'refs/tags/' + github_client.latest_release(ENV['GITHUB_REPOSITORY']).tag_name
 
 diamond_cl = Changelog.new(
-  'paritytech/Polkadot', last_ref, current_ref, token: token
+  'paritytech/diamond', last_ref, current_ref, token: token
 )
 
 # Gets the substrate commit hash used for a given diamond ref
@@ -98,7 +98,7 @@ rustc_stable = ENV['RUSTC_STABLE']
 rustc_nightly = ENV['RUSTC_NIGHTLY']
 diamond_runtime = get_runtime('diamond', diamond_path)
 gold_runtime = get_runtime('gold', diamond_path)
-westend_runtime = get_runtime('westend', diamond_path)
+ruby_runtime = get_runtime('ruby', diamond_path)
 
 # These json files should have been downloaded as part of the build-runtimes
 # github action

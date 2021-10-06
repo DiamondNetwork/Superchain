@@ -49,7 +49,7 @@ use structopt::StructOpt;
 pub(crate) enum AnyRuntime {
 	diamond,
 	gold,
-	Westend,
+	ruby,
 }
 
 pub(crate) static mut RUNTIME: AnyRuntime = AnyRuntime::diamond;
@@ -143,12 +143,12 @@ fn signed_ext_builder_gold(
 	)
 }
 
-fn signed_ext_builder_westend(
+fn signed_ext_builder_ruby(
 	nonce: Index,
 	tip: Balance,
 	era: sp_runtime::generic::Era,
-) -> westend_runtime_exports::SignedExtra {
-	use westend_runtime_exports::Runtime;
+) -> ruby_runtime_exports::SignedExtra {
+	use ruby_runtime_exports::Runtime;
 	(
 		frame_system::CheckSpecVersion::<Runtime>::new(),
 		frame_system::CheckTxVersion::<Runtime>::new(),
@@ -162,7 +162,7 @@ fn signed_ext_builder_westend(
 
 construct_runtime_prelude!(diamond);
 construct_runtime_prelude!(gold);
-construct_runtime_prelude!(westend);
+construct_runtime_prelude!(ruby);
 
 // NOTE: this is no longer used extensively, most of the per-runtime stuff us delegated to
 // `construct_runtime_prelude` and macro's the import directly from it. A part of the code is also
@@ -185,9 +185,9 @@ macro_rules! any_runtime {
 					use $crate::gold_runtime_exports::*;
 					$($code)*
 				},
-				$crate::AnyRuntime::Westend => {
+				$crate::AnyRuntime::ruby => {
 					#[allow(unused)]
-					use $crate::westend_runtime_exports::*;
+					use $crate::ruby_runtime_exports::*;
 					$($code)*
 				}
 			}
@@ -212,9 +212,9 @@ macro_rules! any_runtime_unit {
 					use $crate::gold_runtime_exports::*;
 					let _ = $($code)*;
 				},
-				$crate::AnyRuntime::Westend => {
+				$crate::AnyRuntime::ruby => {
 					#[allow(unused)]
-					use $crate::westend_runtime_exports::*;
+					use $crate::ruby_runtime_exports::*;
 					let _ = $($code)*;
 				}
 			}
@@ -556,7 +556,7 @@ async fn main() {
 				RUNTIME = AnyRuntime::gold;
 			}
 		},
-		"westend" => {
+		"ruby" => {
 			sp_core::crypto::set_default_ss58_version(
 				sp_core::crypto::Ss58AddressFormat::diamondAccount,
 			);
@@ -565,7 +565,7 @@ async fn main() {
 			// safety: this program will always be single threaded, thus accessing global static is
 			// safe.
 			unsafe {
-				RUNTIME = AnyRuntime::Westend;
+				RUNTIME = AnyRuntime::ruby;
 			}
 		},
 		_ => {

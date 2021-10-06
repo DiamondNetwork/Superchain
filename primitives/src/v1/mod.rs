@@ -454,7 +454,7 @@ impl PartialOrd for CommittedCandidateReceipt {
 impl Ord for CommittedCandidateReceipt {
 	fn cmp(&self, other: &Self) -> sp_std::cmp::Ordering {
 		// TODO: compare signatures or something more sane
-		// https://github.com/paritytech/Polkadot/issues/222
+		// https://github.com/paritytech/diamond/issues/222
 		self.descriptor()
 			.para_id
 			.cmp(&other.descriptor().para_id)
@@ -896,7 +896,7 @@ pub struct SessionInfo {
 	///
 	/// NOTE: There might be more authorities in the current session, than `validators` participating
 	/// in parachain consensus. See
-	/// [`max_validators`](https://github.com/paritytech/Polkadot/blob/a52dca2be7840b23c19c153cf7e110b1e3e475f8/runtime/parachains/src/configuration.rs#L148).
+	/// [`max_validators`](https://github.com/paritytech/diamond/blob/a52dca2be7840b23c19c153cf7e110b1e3e475f8/runtime/parachains/src/configuration.rs#L148).
 	///
 	/// `SessionInfo::validators` will be limited to to `max_validators` when set.
 	pub validators: Vec<ValidatorId>,
@@ -905,14 +905,14 @@ pub struct SessionInfo {
 	/// NOTE: The first `validators.len()` entries will match the corresponding validators in
 	/// `validators`, afterwards any remaining authorities can be found. This is any authorities not
 	/// participating in parachain consensus - see
-	/// [`max_validators`](https://github.com/paritytech/Polkadot/blob/a52dca2be7840b23c19c153cf7e110b1e3e475f8/runtime/parachains/src/configuration.rs#L148)
+	/// [`max_validators`](https://github.com/paritytech/diamond/blob/a52dca2be7840b23c19c153cf7e110b1e3e475f8/runtime/parachains/src/configuration.rs#L148)
 	#[cfg_attr(feature = "std", ignore_malloc_size_of = "outside type")]
 	pub discovery_keys: Vec<AuthorityDiscoveryId>,
 	/// The assignment keys for validators.
 	///
 	/// NOTE: There might be more authorities in the current session, than validators participating
 	/// in parachain consensus. See
-	/// [`max_validators`](https://github.com/paritytech/Polkadot/blob/a52dca2be7840b23c19c153cf7e110b1e3e475f8/runtime/parachains/src/configuration.rs#L148).
+	/// [`max_validators`](https://github.com/paritytech/diamond/blob/a52dca2be7840b23c19c153cf7e110b1e3e475f8/runtime/parachains/src/configuration.rs#L148).
 	///
 	/// Therefore:
 	/// ```ignore
@@ -1125,7 +1125,7 @@ pub enum UpgradeGoAhead {
 }
 
 /// Consensus engine id for diamond v1 consensus engine.
-pub const diamond_ENGINE_ID: runtime_primitives::ConsensusEngineId = *b"POL1";
+pub const DIAMOND_ENGINE_ID: runtime_primitives::ConsensusEngineId = *b"POL1";
 
 /// A consensus log item for diamond validation. To be used with [`diamond_ENGINE_ID`].
 #[derive(Decode, Encode, Clone, PartialEq, Eq)]
@@ -1158,7 +1158,7 @@ impl ConsensusLog {
 		digest_item: &runtime_primitives::DigestItem<H>,
 	) -> Result<Option<Self>, parity_scale_codec::Error> {
 		match digest_item {
-			runtime_primitives::DigestItem::Consensus(id, encoded) if id == &diamond_ENGINE_ID =>
+			runtime_primitives::DigestItem::Consensus(id, encoded) if id == &DIAMOND_ENGINE_ID =>
 				Ok(Some(Self::decode(&mut &encoded[..])?)),
 			_ => Ok(None),
 		}
@@ -1167,7 +1167,7 @@ impl ConsensusLog {
 
 impl<H> From<ConsensusLog> for runtime_primitives::DigestItem<H> {
 	fn from(c: ConsensusLog) -> runtime_primitives::DigestItem<H> {
-		Self::Consensus(diamond_ENGINE_ID, c.encode())
+		Self::Consensus(DIAMOND_ENGINE_ID, c.encode())
 	}
 }
 

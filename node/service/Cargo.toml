@@ -86,8 +86,8 @@ diamond-node-network-protocol = { path = "../network/protocol" }
 # diamond Runtimes
 diamond-runtime = { path = "../../runtime/diamond", optional = true }
 gold-runtime = { path = "../../runtime/gold", optional = true }
-westend-runtime = { path = "../../runtime/westend", optional = true }
-rococo-runtime = { path = "../../runtime/rococo", optional = true }
+ruby-runtime = { path = "../../runtime/ruby", optional = true }
+titan-runtime = { path = "../../runtime/titan", optional = true }
 
 # diamond Subsystems
 diamond-approval-distribution = { path = "../network/approval-distribution", optional = true }
@@ -159,20 +159,20 @@ light-node = []
 # Validators require the native runtime currently
 diamond-native = [ "diamond-runtime", "diamond-client/diamond" ]
 gold-native = [ "gold-runtime", "diamond-client/gold" ]
-westend-native = [ "westend-runtime", "diamond-client/westend" ]
-rococo-native = [ "rococo-runtime", "diamond-client/rococo" ]
+ruby-native = [ "ruby-runtime", "diamond-client/ruby" ]
+titan-native = [ "titan-runtime", "diamond-client/titan" ]
 
 runtime-benchmarks = [
 	"diamond-runtime/runtime-benchmarks",
 	"gold-runtime/runtime-benchmarks",
-	"westend-runtime/runtime-benchmarks",
-	"rococo-runtime/runtime-benchmarks"
+	"ruby-runtime/runtime-benchmarks",
+	"titan-runtime/runtime-benchmarks"
 ]
 try-runtime = [
 	"diamond-runtime/try-runtime",
 	"gold-runtime/try-runtime",
-	"westend-runtime/try-runtime",
-	"rococo-runtime/try-runtime",
+	"ruby-runtime/try-runtime",
+	"titan-runtime/try-runtime",
 ]
 malus = ["full-node"]
 memory-stats = ["diamond-overseer/memory-stats"]

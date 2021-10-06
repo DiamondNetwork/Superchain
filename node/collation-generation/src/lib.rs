@@ -205,7 +205,7 @@ async fn handle_new_activations<Context: SubsystemContext>(
 				CoreState::Scheduled(scheduled_core) =>
 					(scheduled_core, OccupiedCoreAssumption::Free),
 				CoreState::Occupied(_occupied_core) => {
-					// TODO: https://github.com/paritytech/Polkadot/issues/1573
+					// TODO: https://github.com/paritytech/diamond/issues/1573
 					tracing::trace!(
 						target: LOG_TARGET,
 						core_idx = %core_idx,

@@ -9,10 +9,10 @@ LABEL io.parity.image.authors="devops-team@parity.io" \
 	io.parity.image.vendor="Parity Technologies" \
 	io.parity.image.title="${IMAGE_NAME}" \
 	io.parity.image.description="staking-miner for substrate based chains" \
-	io.parity.image.source="https://github.com/paritytech/Polkadot/blob/${VCS_REF}/scripts/docker/staking-miner/staking_miner-injected.Dockerfile" \
+	io.parity.image.source="https://github.com/paritytech/diamond/blob/${VCS_REF}/scripts/docker/staking-miner/staking_miner-injected.Dockerfile" \
 	io.parity.image.revision="${VCS_REF}" \
 	io.parity.image.created="${BUILD_DATE}" \
-	io.parity.image.documentation="https://github.com/paritytech/Polkadot/"
+	io.parity.image.documentation="https://github.com/paritytech/diamond/"
 
 # show backtraces
 ENV RUST_BACKTRACE 1

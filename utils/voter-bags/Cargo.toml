@@ -9,6 +9,6 @@ generate-bags = { git = "https://github.com/paritytech/substrate", branch = "mas
 sp-io = { git = "https://github.com/paritytech/substrate", branch = "master" }
 structopt = "0.3.21"
 
-westend-runtime = { path = "../../runtime/westend" }
+ruby-runtime = { path = "../../runtime/ruby" }
 gold-runtime = { path = "../../runtime/gold" }
 diamond-runtime = { path = "../../runtime/diamond" }

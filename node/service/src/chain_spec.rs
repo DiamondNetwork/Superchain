@@ -32,28 +32,28 @@ use diamond_runtime as diamond;
 use sp_authority_discovery::AuthorityId as AuthorityDiscoveryId;
 use sp_consensus_babe::AuthorityId as BabeId;
 
-#[cfg(feature = "rococo-native")]
-use rococo_runtime as rococo;
-#[cfg(feature = "rococo-native")]
-use rococo_runtime::constants::currency::UNITS as ROC;
+#[cfg(feature = "titan-native")]
+use titan_runtime as titan;
+#[cfg(feature = "titan-native")]
+use titan_runtime::constants::currency::UNITS as ROC;
 use sc_chain_spec::{ChainSpecExtension, ChainType};
 use serde::{Deserialize, Serialize};
 use sp_core::{sr25519, Pair, Public};
 use sp_runtime::{traits::IdentifyAccount, Perbill};
 use telemetry::TelemetryEndpoints;
-#[cfg(feature = "westend-native")]
-use westend_runtime as westend;
-#[cfg(feature = "westend-native")]
-use westend_runtime::constants::currency::UNITS as WND;
+#[cfg(feature = "ruby-native")]
+use ruby_runtime as ruby;
+#[cfg(feature = "ruby-native")]
+use ruby_runtime::constants::currency::UNITS as WND;
 
 #[cfg(feature = "diamond-native")]
-const diamond_STAGING_TELEMETRY_URL: &str = "wss://telemetry.Polkadot.io/submit/";
+const DIAMOND_STAGING_TELEMETRY_URL: &str = "wss://telemetry.diamond.io/submit/";
 #[cfg(feature = "gold-native")]
-const gold_STAGING_TELEMETRY_URL: &str = "wss://telemetry.Polkadot.io/submit/";
-#[cfg(feature = "westend-native")]
-const WESTEND_STAGING_TELEMETRY_URL: &str = "wss://telemetry.Polkadot.io/submit/";
-#[cfg(feature = "rococo-native")]
-const ROCOCO_STAGING_TELEMETRY_URL: &str = "wss://telemetry.Polkadot.io/submit/";
+const GOLD_STAGING_TELEMETRY_URL: &str = "wss://telemetry.diamond.io/submit/";
+#[cfg(feature = "ruby-native")]
+const RUBY_STAGING_TELEMETRY_URL: &str = "wss://telemetry.diamond.io/submit/";
+#[cfg(feature = "titan-native")]
+const TITAN_STAGING_TELEMETRY_URL: &str = "wss://telemetry.diamond.io/submit/";
 const DEFAULT_PROTOCOL_ID: &str = "dot";
 
 /// Node `ChainSpec` extensions.
@@ -75,89 +75,89 @@ pub struct Extensions {
 
 /// The `ChainSpec` parameterized for the diamond runtime.
 #[cfg(feature = "diamond-native")]
-pub type diamondChainSpec = service::GenericChainSpec<diamond::GenesisConfig, Extensions>;
+pub type DiamondChainSpec = service::GenericChainSpec<diamond::GenesisConfig, Extensions>;
 
 // Dummy chain spec, in case when we don't have the native runtime.
 pub type DummyChainSpec = service::GenericChainSpec<(), Extensions>;
 
 // Dummy chain spec, but that is fine when we don't have the native runtime.
 #[cfg(not(feature = "diamond-native"))]
-pub type diamondChainSpec = DummyChainSpec;
+pub type DiamondChainSpec = DummyChainSpec;
 
 /// The `ChainSpec` parameterized for the gold runtime.
 #[cfg(feature = "gold-native")]
-pub type goldChainSpec = service::GenericChainSpec<gold::GenesisConfig, Extensions>;
+pub type GoldChainSpec = service::GenericChainSpec<gold::GenesisConfig, Extensions>;
 
 /// The `ChainSpec` parameterized for the gold runtime.
 // Dummy chain spec, but that is fine when we don't have the native runtime.
 #[cfg(not(feature = "gold-native"))]
-pub type goldChainSpec = DummyChainSpec;
+pub type GoldChainSpec = DummyChainSpec;
 
-/// The `ChainSpec` parameterized for the westend runtime.
-#[cfg(feature = "westend-native")]
-pub type WestendChainSpec = service::GenericChainSpec<westend::GenesisConfig, Extensions>;
+/// The `ChainSpec` parameterized for the ruby runtime.
+#[cfg(feature = "ruby-native")]
+pub type RubyChainSpec = service::GenericChainSpec<ruby::GenesisConfig, Extensions>;
 
-/// The `ChainSpec` parameterized for the westend runtime.
+/// The `ChainSpec` parameterized for the ruby runtime.
 // Dummy chain spec, but that is fine when we don't have the native runtime.
-#[cfg(not(feature = "westend-native"))]
-pub type WestendChainSpec = DummyChainSpec;
+#[cfg(not(feature = "ruby-native"))]
+pub type RubyChainSpec = DummyChainSpec;
 
-/// The `ChainSpec` parameterized for the rococo runtime.
-#[cfg(feature = "rococo-native")]
-pub type RococoChainSpec = service::GenericChainSpec<RococoGenesisExt, Extensions>;
+/// The `ChainSpec` parameterized for the titan runtime.
+#[cfg(feature = "titan-native")]
+pub type TitanChainSpec = service::GenericChainSpec<TitanGenesisExt, Extensions>;
 
-/// The `ChainSpec` parameterized for the rococo runtime.
+/// The `ChainSpec` parameterized for the titan runtime.
 // Dummy chain spec, but that is fine when we don't have the native runtime.
-#[cfg(not(feature = "rococo-native"))]
-pub type RococoChainSpec = DummyChainSpec;
+#[cfg(not(feature = "titan-native"))]
+pub type TitanChainSpec = DummyChainSpec;
 
-/// Extension for the Rococo genesis config to support a custom changes to the genesis state.
+/// Extension for the titan genesis config to support a custom changes to the genesis state.
 #[derive(serde::Serialize, serde::Deserialize)]
-#[cfg(feature = "rococo-native")]
-pub struct RococoGenesisExt {
+#[cfg(feature = "titan-native")]
+pub struct TitanGenesisExt {
 	/// The runtime genesis config.
-	runtime_genesis_config: rococo::GenesisConfig,
+	runtime_genesis_config: titan::GenesisConfig,
 	/// The session length in blocks.
 	///
 	/// If `None` is supplied, the default value is used.
 	session_length_in_blocks: Option<u32>,
 }
 
-#[cfg(feature = "rococo-native")]
-impl sp_runtime::BuildStorage for RococoGenesisExt {
+#[cfg(feature = "titan-native")]
+impl sp_runtime::BuildStorage for TitanGenesisExt {
 	fn assimilate_storage(&self, storage: &mut sp_core::storage::Storage) -> Result<(), String> {
 		sp_state_machine::BasicExternalities::execute_with_storage(storage, || {
 			if let Some(length) = self.session_length_in_blocks.as_ref() {
-				rococo::constants::time::EpochDurationInBlocks::set(length);
+				titan::constants::time::EpochDurationInBlocks::set(length);
 			}
 		});
 		self.runtime_genesis_config.assimilate_storage(storage)
 	}
 }
 
-pub fn diamond_config() -> Result<diamondChainSpec, String> {
-	diamondChainSpec::from_json_bytes(&include_bytes!("../res/diamond.json")[..])
+pub fn diamond_config() -> Result<DiamondChainSpec, String> {
+	DiamondChainSpec::from_json_bytes(&include_bytes!("../res/diamond.json")[..])
 }
 
-pub fn gold_config() -> Result<goldChainSpec, String> {
-	goldChainSpec::from_json_bytes(&include_bytes!("../res/gold.json")[..])
+pub fn gold_config() -> Result<GoldChainSpec, String> {
+	GoldChainSpec::from_json_bytes(&include_bytes!("../res/gold.json")[..])
 }
 
-pub fn westend_config() -> Result<WestendChainSpec, String> {
-	WestendChainSpec::from_json_bytes(&include_bytes!("../res/westend.json")[..])
+pub fn ruby_config() -> Result<RubyChainSpec, String> {
+	RubyChainSpec::from_json_bytes(&include_bytes!("../res/ruby.json")[..])
 }
 
-pub fn rococo_config() -> Result<RococoChainSpec, String> {
-	RococoChainSpec::from_json_bytes(&include_bytes!("../res/rococo.json")[..])
+pub fn titan_config() -> Result<TitanChainSpec, String> {
+	TitanChainSpec::from_json_bytes(&include_bytes!("../res/titan.json")[..])
 }
 
-/// This is a temporary testnet that uses the same runtime as rococo.
-pub fn wococo_config() -> Result<RococoChainSpec, String> {
-	RococoChainSpec::from_json_bytes(&include_bytes!("../res/wococo.json")[..])
+/// This is a temporary testnet that uses the same runtime as titan.
+pub fn wococo_config() -> Result<TitanChainSpec, String> {
+	TitanChainSpec::from_json_bytes(&include_bytes!("../res/wococo.json")[..])
 }
 
 /// The default parachains host configuration.
-#[cfg(any(feature = "rococo-native", feature = "gold-native", feature = "westend-native"))]
+#[cfg(any(feature = "titan-native", feature = "gold-native", feature = "ruby-native"))]
 fn default_parachains_host_configuration(
 ) -> diamond_runtime_parachains::configuration::HostConfiguration<
 	diamond_primitives::v1::BlockNumber,
@@ -243,16 +243,16 @@ fn gold_session_keys(
 	}
 }
 
-#[cfg(feature = "westend-native")]
-fn westend_session_keys(
+#[cfg(feature = "ruby-native")]
+fn ruby_session_keys(
 	babe: BabeId,
 	grandpa: GrandpaId,
 	im_online: ImOnlineId,
 	para_validator: ValidatorId,
 	para_assignment: AssignmentId,
 	authority_discovery: AuthorityDiscoveryId,
-) -> westend::SessionKeys {
-	westend::SessionKeys {
+) -> ruby::SessionKeys {
+	ruby::SessionKeys {
 		babe,
 		grandpa,
 		im_online,
@@ -262,8 +262,8 @@ fn westend_session_keys(
 	}
 }
 
-#[cfg(feature = "rococo-native")]
-fn rococo_session_keys(
+#[cfg(feature = "titan-native")]
+fn titan_session_keys(
 	babe: BabeId,
 	grandpa: GrandpaId,
 	im_online: ImOnlineId,
@@ -271,8 +271,8 @@ fn rococo_session_keys(
 	para_assignment: AssignmentId,
 	authority_discovery: AuthorityDiscoveryId,
 	beefy: BeefyId,
-) -> rococo_runtime::SessionKeys {
-	rococo_runtime::SessionKeys {
+) -> titan_runtime::SessionKeys {
+	titan_runtime::SessionKeys {
 		babe,
 		grandpa,
 		im_online,
@@ -367,8 +367,8 @@ fn diamond_staging_testnet_config_genesis(wasm_binary: &[u8]) -> diamond::Genesi
 	}
 }
 
-#[cfg(feature = "westend-native")]
-fn westend_staging_testnet_config_genesis(wasm_binary: &[u8]) -> westend::GenesisConfig {
+#[cfg(feature = "ruby-native")]
+fn ruby_staging_testnet_config_genesis(wasm_binary: &[u8]) -> ruby::GenesisConfig {
 	use hex_literal::hex;
 	use sp_core::crypto::UncheckedInto;
 
@@ -489,27 +489,27 @@ fn westend_staging_testnet_config_genesis(wasm_binary: &[u8]) -> westend::Genesi
 	const ENDOWMENT: u128 = 1_000_000 * WND;
 	const STASH: u128 = 100 * WND;
 
-	westend::GenesisConfig {
-		system: westend::SystemConfig {
+	ruby::GenesisConfig {
+		system: ruby::SystemConfig {
 			code: wasm_binary.to_vec(),
 			changes_trie_config: Default::default(),
 		},
-		balances: westend::BalancesConfig {
+		balances: ruby::BalancesConfig {
 			balances: endowed_accounts
 				.iter()
 				.map(|k: &AccountId| (k.clone(), ENDOWMENT))
 				.chain(initial_authorities.iter().map(|x| (x.0.clone(), STASH)))
 				.collect(),
 		},
-		indices: westend::IndicesConfig { indices: vec![] },
-		session: westend::SessionConfig {
+		indices: ruby::IndicesConfig { indices: vec![] },
+		session: ruby::SessionConfig {
 			keys: initial_authorities
 				.iter()
 				.map(|x| {
 					(
 						x.0.clone(),
 						x.0.clone(),
-						westend_session_keys(
+						ruby_session_keys(
 							x.2.clone(),
 							x.3.clone(),
 							x.4.clone(),
@@ -521,32 +521,32 @@ fn westend_staging_testnet_config_genesis(wasm_binary: &[u8]) -> westend::Genesi
 				})
 				.collect::<Vec<_>>(),
 		},
-		staking: westend::StakingConfig {
+		staking: ruby::StakingConfig {
 			validator_count: 50,
 			minimum_validator_count: 4,
 			stakers: initial_authorities
 				.iter()
-				.map(|x| (x.0.clone(), x.1.clone(), STASH, westend::StakerStatus::Validator))
+				.map(|x| (x.0.clone(), x.1.clone(), STASH, ruby::StakerStatus::Validator))
 				.collect(),
 			invulnerables: initial_authorities.iter().map(|x| x.0.clone()).collect(),
 			force_era: Forcing::ForceNone,
 			slash_reward_fraction: Perbill::from_percent(10),
 			..Default::default()
 		},
-		babe: westend::BabeConfig {
+		babe: ruby::BabeConfig {
 			authorities: Default::default(),
-			epoch_config: Some(westend::BABE_GENESIS_EPOCH_CONFIG),
+			epoch_config: Some(ruby::BABE_GENESIS_EPOCH_CONFIG),
 		},
 		grandpa: Default::default(),
 		im_online: Default::default(),
-		authority_discovery: westend::AuthorityDiscoveryConfig { keys: vec![] },
-		vesting: westend::VestingConfig { vesting: vec![] },
-		sudo: westend::SudoConfig { key: endowed_accounts[0].clone() },
-		configuration: westend::ConfigurationConfig {
+		authority_discovery: ruby::AuthorityDiscoveryConfig { keys: vec![] },
+		vesting: ruby::VestingConfig { vesting: vec![] },
+		sudo: ruby::SudoConfig { key: endowed_accounts[0].clone() },
+		configuration: ruby::ConfigurationConfig {
 			config: default_parachains_host_configuration(),
 		},
 		paras: Default::default(),
-		registrar: westend_runtime::RegistrarConfig {
+		registrar: ruby_runtime::RegistrarConfig {
 			next_free_para_id: diamond_primitives::v1::LOWEST_PUBLIC_ID,
 		},
 	}
@@ -749,8 +749,8 @@ fn gold_staging_testnet_config_genesis(wasm_binary: &[u8]) -> gold::GenesisConfi
 	}
 }
 
-#[cfg(feature = "rococo-native")]
-fn rococo_staging_testnet_config_genesis(wasm_binary: &[u8]) -> rococo_runtime::GenesisConfig {
+#[cfg(feature = "titan-native")]
+fn titan_staging_testnet_config_genesis(wasm_binary: &[u8]) -> titan_runtime::GenesisConfig {
 	use hex_literal::hex;
 	use sp_core::crypto::UncheckedInto;
 
@@ -993,12 +993,12 @@ fn rococo_staging_testnet_config_genesis(wasm_binary: &[u8]) -> rococo_runtime::
 	const ENDOWMENT: u128 = 1_000_000 * ROC;
 	const STASH: u128 = 100 * ROC;
 
-	rococo_runtime::GenesisConfig {
-		system: rococo_runtime::SystemConfig {
+	titan_runtime::GenesisConfig {
+		system: titan_runtime::SystemConfig {
 			code: wasm_binary.to_vec(),
 			changes_trie_config: Default::default(),
 		},
-		balances: rococo_runtime::BalancesConfig {
+		balances: titan_runtime::BalancesConfig {
 			balances: endowed_accounts
 				.iter()
 				.map(|k: &AccountId| (k.clone(), ENDOWMENT))
@@ -1006,15 +1006,15 @@ fn rococo_staging_testnet_config_genesis(wasm_binary: &[u8]) -> rococo_runtime::
 				.collect(),
 		},
 		beefy: Default::default(),
-		indices: rococo_runtime::IndicesConfig { indices: vec![] },
-		session: rococo_runtime::SessionConfig {
+		indices: titan_runtime::IndicesConfig { indices: vec![] },
+		session: titan_runtime::SessionConfig {
 			keys: initial_authorities
 				.iter()
 				.map(|x| {
 					(
 						x.0.clone(),
 						x.0.clone(),
-						rococo_session_keys(
+						titan_session_keys(
 							x.2.clone(),
 							x.3.clone(),
 							x.4.clone(),
@@ -1027,37 +1027,37 @@ fn rococo_staging_testnet_config_genesis(wasm_binary: &[u8]) -> rococo_runtime::
 				})
 				.collect::<Vec<_>>(),
 		},
-		babe: rococo_runtime::BabeConfig {
+		babe: titan_runtime::BabeConfig {
 			authorities: Default::default(),
-			epoch_config: Some(rococo_runtime::BABE_GENESIS_EPOCH_CONFIG),
+			epoch_config: Some(titan_runtime::BABE_GENESIS_EPOCH_CONFIG),
 		},
 		grandpa: Default::default(),
 		im_online: Default::default(),
 		collective: Default::default(),
 		membership: Default::default(),
-		authority_discovery: rococo_runtime::AuthorityDiscoveryConfig { keys: vec![] },
-		sudo: rococo_runtime::SudoConfig { key: endowed_accounts[0].clone() },
-		paras: rococo_runtime::ParasConfig { paras: vec![] },
+		authority_discovery: titan_runtime::AuthorityDiscoveryConfig { keys: vec![] },
+		sudo: titan_runtime::SudoConfig { key: endowed_accounts[0].clone() },
+		paras: titan_runtime::ParasConfig { paras: vec![] },
 		hrmp: Default::default(),
-		configuration: rococo_runtime::ConfigurationConfig {
+		configuration: titan_runtime::ConfigurationConfig {
 			config: default_parachains_host_configuration(),
 		},
-		registrar: rococo_runtime::RegistrarConfig {
+		registrar: titan_runtime::RegistrarConfig {
 			next_free_para_id: diamond_primitives::v1::LOWEST_PUBLIC_ID,
 		},
-		// bridge_rococo_grandpa: rococo_runtime::BridgeRococoGrandpaConfig {
+		// bridge_titan_grandpa: titan_runtime::BridgetitanGrandpaConfig {
 		// 	owner: Some(endowed_accounts[0].clone()),
 		// 	..Default::default()
 		// },
-		// bridge_wococo_grandpa: rococo_runtime::BridgeWococoGrandpaConfig {
+		// bridge_wococo_grandpa: titan_runtime::BridgeWococoGrandpaConfig {
 		// 	owner: Some(endowed_accounts[0].clone()),
 		// 	..Default::default()
 		// },
-		// bridge_rococo_messages: rococo_runtime::BridgeRococoMessagesConfig {
+		// bridge_titan_messages: titan_runtime::BridgetitanMessagesConfig {
 		// 	owner: Some(endowed_accounts[0].clone()),
 		// 	..Default::default()
 		// },
-		// bridge_wococo_messages: rococo_runtime::BridgeWococoMessagesConfig {
+		// bridge_wococo_messages: titan_runtime::BridgeWococoMessagesConfig {
 		// 	owner: Some(endowed_accounts[0].clone()),
 		// 	..Default::default()
 		// },
@@ -1066,18 +1066,18 @@ fn rococo_staging_testnet_config_genesis(wasm_binary: &[u8]) -> rococo_runtime::
 
 /// diamond staging testnet config.
 #[cfg(feature = "diamond-native")]
-pub fn diamond_staging_testnet_config() -> Result<diamondChainSpec, String> {
+pub fn diamond_staging_testnet_config() -> Result<DiamondChainSpec, String> {
 	let wasm_binary = diamond::WASM_BINARY.ok_or("diamond development wasm not available")?;
 	let boot_nodes = vec![];
 
-	Ok(diamondChainSpec::from_genesis(
+	Ok(DiamondChainSpec::from_genesis(
 		"diamond Staging Testnet",
 		"diamond_staging_testnet",
 		ChainType::Live,
 		move || diamond_staging_testnet_config_genesis(wasm_binary),
 		boot_nodes,
 		Some(
-			TelemetryEndpoints::new(vec![(diamond_STAGING_TELEMETRY_URL.to_string(), 0)])
+			TelemetryEndpoints::new(vec![(DIAMOND_STAGING_TELEMETRY_URL.to_string(), 0)])
 				.expect("diamond Staging telemetry url is valid; qed"),
 		),
 		Some(DEFAULT_PROTOCOL_ID),
@@ -1088,18 +1088,18 @@ pub fn diamond_staging_testnet_config() -> Result<diamondChainSpec, String> {
 
 /// Staging testnet config.
 #[cfg(feature = "gold-native")]
-pub fn gold_staging_testnet_config() -> Result<goldChainSpec, String> {
+pub fn gold_staging_testnet_config() -> Result<GoldChainSpec, String> {
 	let wasm_binary = gold::WASM_BINARY.ok_or("gold development wasm not available")?;
 	let boot_nodes = vec![];
 
-	Ok(goldChainSpec::from_genesis(
+	Ok(GoldChainSpec::from_genesis(
 		"gold Staging Testnet",
 		"gold_staging_testnet",
 		ChainType::Live,
 		move || gold_staging_testnet_config_genesis(wasm_binary),
 		boot_nodes,
 		Some(
-			TelemetryEndpoints::new(vec![(gold_STAGING_TELEMETRY_URL.to_string(), 0)])
+			TelemetryEndpoints::new(vec![(GOLD_STAGING_TELEMETRY_URL.to_string(), 0)])
 				.expect("gold Staging telemetry url is valid; qed"),
 		),
 		Some(DEFAULT_PROTOCOL_ID),
@@ -1108,21 +1108,21 @@ pub fn gold_staging_testnet_config() -> Result<goldChainSpec, String> {
 	))
 }
 
-/// Westend staging testnet config.
-#[cfg(feature = "westend-native")]
-pub fn westend_staging_testnet_config() -> Result<WestendChainSpec, String> {
-	let wasm_binary = westend::WASM_BINARY.ok_or("Westend development wasm not available")?;
+/// ruby staging testnet config.
+#[cfg(feature = "ruby-native")]
+pub fn ruby_staging_testnet_config() -> Result<RubyChainSpec, String> {
+	let wasm_binary = ruby::WASM_BINARY.ok_or("ruby development wasm not available")?;
 	let boot_nodes = vec![];
 
-	Ok(WestendChainSpec::from_genesis(
-		"Westend Staging Testnet",
-		"westend_staging_testnet",
+	Ok(RubyChainSpec::from_genesis(
+		"ruby Staging Testnet",
+		"ruby_staging_testnet",
 		ChainType::Live,
-		move || westend_staging_testnet_config_genesis(wasm_binary),
+		move || ruby_staging_testnet_config_genesis(wasm_binary),
 		boot_nodes,
 		Some(
-			TelemetryEndpoints::new(vec![(WESTEND_STAGING_TELEMETRY_URL.to_string(), 0)])
-				.expect("Westend Staging telemetry url is valid; qed"),
+			TelemetryEndpoints::new(vec![(RUBY_STAGING_TELEMETRY_URL.to_string(), 0)])
+				.expect("ruby Staging telemetry url is valid; qed"),
 		),
 		Some(DEFAULT_PROTOCOL_ID),
 		None,
@@ -1130,24 +1130,24 @@ pub fn westend_staging_testnet_config() -> Result<WestendChainSpec, String> {
 	))
 }
 
-/// Rococo staging testnet config.
-#[cfg(feature = "rococo-native")]
-pub fn rococo_staging_testnet_config() -> Result<RococoChainSpec, String> {
-	let wasm_binary = rococo::WASM_BINARY.ok_or("Rococo development wasm not available")?;
+/// titan staging testnet config.
+#[cfg(feature = "titan-native")]
+pub fn titan_staging_testnet_config() -> Result<TitanChainSpec, String> {
+	let wasm_binary = titan::WASM_BINARY.ok_or("titan development wasm not available")?;
 	let boot_nodes = vec![];
 
-	Ok(RococoChainSpec::from_genesis(
-		"Rococo Staging Testnet",
-		"rococo_staging_testnet",
+	Ok(TitanChainSpec::from_genesis(
+		"titan Staging Testnet",
+		"titan_staging_testnet",
 		ChainType::Live,
-		move || RococoGenesisExt {
-			runtime_genesis_config: rococo_staging_testnet_config_genesis(wasm_binary),
+		move || TitanGenesisExt {
+			runtime_genesis_config: titan_staging_testnet_config_genesis(wasm_binary),
 			session_length_in_blocks: None,
 		},
 		boot_nodes,
 		Some(
-			TelemetryEndpoints::new(vec![(ROCOCO_STAGING_TELEMETRY_URL.to_string(), 0)])
-				.expect("Rococo Staging telemetry url is valid; qed"),
+			TelemetryEndpoints::new(vec![(TITAN_STAGING_TELEMETRY_URL.to_string(), 0)])
+				.expect("titan Staging telemetry url is valid; qed"),
 		),
 		Some(DEFAULT_PROTOCOL_ID),
 		None,
@@ -1401,9 +1401,9 @@ pub fn gold_testnet_genesis(
 	}
 }
 
-/// Helper function to create westend `GenesisConfig` for testing
-#[cfg(feature = "westend-native")]
-pub fn westend_testnet_genesis(
+/// Helper function to create ruby `GenesisConfig` for testing
+#[cfg(feature = "ruby-native")]
+pub fn ruby_testnet_genesis(
 	wasm_binary: &[u8],
 	initial_authorities: Vec<(
 		AccountId,
@@ -1417,29 +1417,29 @@ pub fn westend_testnet_genesis(
 	)>,
 	root_key: AccountId,
 	endowed_accounts: Option<Vec<AccountId>>,
-) -> westend::GenesisConfig {
+) -> ruby::GenesisConfig {
 	let endowed_accounts: Vec<AccountId> = endowed_accounts.unwrap_or_else(testnet_accounts);
 
 	const ENDOWMENT: u128 = 1_000_000 * DOT;
 	const STASH: u128 = 100 * DOT;
 
-	westend::GenesisConfig {
-		system: westend::SystemConfig {
+	ruby::GenesisConfig {
+		system: ruby::SystemConfig {
 			code: wasm_binary.to_vec(),
 			changes_trie_config: Default::default(),
 		},
-		indices: westend::IndicesConfig { indices: vec![] },
-		balances: westend::BalancesConfig {
+		indices: ruby::IndicesConfig { indices: vec![] },
+		balances: ruby::BalancesConfig {
 			balances: endowed_accounts.iter().map(|k| (k.clone(), ENDOWMENT)).collect(),
 		},
-		session: westend::SessionConfig {
+		session: ruby::SessionConfig {
 			keys: initial_authorities
 				.iter()
 				.map(|x| {
 					(
 						x.0.clone(),
 						x.0.clone(),
-						westend_session_keys(
+						ruby_session_keys(
 							x.2.clone(),
 							x.3.clone(),
 							x.4.clone(),
@@ -1451,40 +1451,40 @@ pub fn westend_testnet_genesis(
 				})
 				.collect::<Vec<_>>(),
 		},
-		staking: westend::StakingConfig {
+		staking: ruby::StakingConfig {
 			minimum_validator_count: 1,
 			validator_count: initial_authorities.len() as u32,
 			stakers: initial_authorities
 				.iter()
-				.map(|x| (x.0.clone(), x.1.clone(), STASH, westend::StakerStatus::Validator))
+				.map(|x| (x.0.clone(), x.1.clone(), STASH, ruby::StakerStatus::Validator))
 				.collect(),
 			invulnerables: initial_authorities.iter().map(|x| x.0.clone()).collect(),
 			force_era: Forcing::NotForcing,
 			slash_reward_fraction: Perbill::from_percent(10),
 			..Default::default()
 		},
-		babe: westend::BabeConfig {
+		babe: ruby::BabeConfig {
 			authorities: Default::default(),
-			epoch_config: Some(westend::BABE_GENESIS_EPOCH_CONFIG),
+			epoch_config: Some(ruby::BABE_GENESIS_EPOCH_CONFIG),
 		},
 		grandpa: Default::default(),
 		im_online: Default::default(),
-		authority_discovery: westend::AuthorityDiscoveryConfig { keys: vec![] },
-		vesting: westend::VestingConfig { vesting: vec![] },
-		sudo: westend::SudoConfig { key: root_key },
-		configuration: westend::ConfigurationConfig {
+		authority_discovery: ruby::AuthorityDiscoveryConfig { keys: vec![] },
+		vesting: ruby::VestingConfig { vesting: vec![] },
+		sudo: ruby::SudoConfig { key: root_key },
+		configuration: ruby::ConfigurationConfig {
 			config: default_parachains_host_configuration(),
 		},
 		paras: Default::default(),
-		registrar: westend_runtime::RegistrarConfig {
+		registrar: ruby_runtime::RegistrarConfig {
 			next_free_para_id: diamond_primitives::v1::LOWEST_PUBLIC_ID,
 		},
 	}
 }
 
-/// Helper function to create rococo `GenesisConfig` for testing
-#[cfg(feature = "rococo-native")]
-pub fn rococo_testnet_genesis(
+/// Helper function to create titan `GenesisConfig` for testing
+#[cfg(feature = "titan-native")]
+pub fn titan_testnet_genesis(
 	wasm_binary: &[u8],
 	initial_authorities: Vec<(
 		AccountId,
@@ -1499,29 +1499,29 @@ pub fn rococo_testnet_genesis(
 	)>,
 	root_key: AccountId,
 	endowed_accounts: Option<Vec<AccountId>>,
-) -> rococo_runtime::GenesisConfig {
+) -> titan_runtime::GenesisConfig {
 	let endowed_accounts: Vec<AccountId> = endowed_accounts.unwrap_or_else(testnet_accounts);
 
 	const ENDOWMENT: u128 = 1_000_000 * DOT;
 
-	rococo_runtime::GenesisConfig {
-		system: rococo_runtime::SystemConfig {
+	titan_runtime::GenesisConfig {
+		system: titan_runtime::SystemConfig {
 			code: wasm_binary.to_vec(),
 			changes_trie_config: Default::default(),
 		},
 		beefy: Default::default(),
-		indices: rococo_runtime::IndicesConfig { indices: vec![] },
-		balances: rococo_runtime::BalancesConfig {
+		indices: titan_runtime::IndicesConfig { indices: vec![] },
+		balances: titan_runtime::BalancesConfig {
 			balances: endowed_accounts.iter().map(|k| (k.clone(), ENDOWMENT)).collect(),
 		},
-		session: rococo_runtime::SessionConfig {
+		session: titan_runtime::SessionConfig {
 			keys: initial_authorities
 				.iter()
 				.map(|x| {
 					(
 						x.0.clone(),
 						x.0.clone(),
-						rococo_session_keys(
+						titan_session_keys(
 							x.2.clone(),
 							x.3.clone(),
 							x.4.clone(),
@@ -1534,37 +1534,37 @@ pub fn rococo_testnet_genesis(
 				})
 				.collect::<Vec<_>>(),
 		},
-		babe: rococo_runtime::BabeConfig {
+		babe: titan_runtime::BabeConfig {
 			authorities: Default::default(),
-			epoch_config: Some(rococo_runtime::BABE_GENESIS_EPOCH_CONFIG),
+			epoch_config: Some(titan_runtime::BABE_GENESIS_EPOCH_CONFIG),
 		},
 		grandpa: Default::default(),
 		im_online: Default::default(),
 		collective: Default::default(),
 		membership: Default::default(),
-		authority_discovery: rococo_runtime::AuthorityDiscoveryConfig { keys: vec![] },
-		sudo: rococo_runtime::SudoConfig { key: root_key.clone() },
-		configuration: rococo_runtime::ConfigurationConfig {
+		authority_discovery: titan_runtime::AuthorityDiscoveryConfig { keys: vec![] },
+		sudo: titan_runtime::SudoConfig { key: root_key.clone() },
+		configuration: titan_runtime::ConfigurationConfig {
 			config: default_parachains_host_configuration(),
 		},
 		hrmp: Default::default(),
-		paras: rococo_runtime::ParasConfig { paras: vec![] },
-		registrar: rococo_runtime::RegistrarConfig {
+		paras: titan_runtime::ParasConfig { paras: vec![] },
+		registrar: titan_runtime::RegistrarConfig {
 			next_free_para_id: diamond_primitives::v1::LOWEST_PUBLIC_ID,
 		},
-		// bridge_rococo_grandpa: rococo_runtime::BridgeRococoGrandpaConfig {
+		// bridge_titan_grandpa: titan_runtime::BridgetitanGrandpaConfig {
 		// 	owner: Some(root_key.clone()),
 		// 	..Default::default()
 		// },
-		// bridge_wococo_grandpa: rococo_runtime::BridgeWococoGrandpaConfig {
+		// bridge_wococo_grandpa: titan_runtime::BridgeWococoGrandpaConfig {
 		// 	owner: Some(root_key.clone()),
 		// 	..Default::default()
 		// },
-		// bridge_rococo_messages: rococo_runtime::BridgeRococoMessagesConfig {
+		// bridge_titan_messages: titan_runtime::BridgetitanMessagesConfig {
 		// 	owner: Some(root_key.clone()),
 		// 	..Default::default()
 		// },
-		// bridge_wococo_messages: rococo_runtime::BridgeWococoMessagesConfig {
+		// bridge_wococo_messages: titan_runtime::BridgeWococoMessagesConfig {
 		// 	owner: Some(root_key.clone()),
 		// 	..Default::default()
 		// },
@@ -1591,9 +1591,9 @@ fn gold_development_config_genesis(wasm_binary: &[u8]) -> gold::GenesisConfig {
 	)
 }
 
-#[cfg(feature = "westend-native")]
-fn westend_development_config_genesis(wasm_binary: &[u8]) -> westend::GenesisConfig {
-	westend_testnet_genesis(
+#[cfg(feature = "ruby-native")]
+fn ruby_development_config_genesis(wasm_binary: &[u8]) -> ruby::GenesisConfig {
+	ruby_testnet_genesis(
 		wasm_binary,
 		vec![get_authority_keys_from_seed_no_beefy("Alice")],
 		get_account_id_from_seed::<sr25519::Public>("Alice"),
@@ -1601,9 +1601,9 @@ fn westend_development_config_genesis(wasm_binary: &[u8]) -> westend::GenesisCon
 	)
 }
 
-#[cfg(feature = "rococo-native")]
-fn rococo_development_config_genesis(wasm_binary: &[u8]) -> rococo_runtime::GenesisConfig {
-	rococo_testnet_genesis(
+#[cfg(feature = "titan-native")]
+fn titan_development_config_genesis(wasm_binary: &[u8]) -> titan_runtime::GenesisConfig {
+	titan_testnet_genesis(
 		wasm_binary,
 		vec![get_authority_keys_from_seed("Alice")],
 		get_account_id_from_seed::<sr25519::Public>("Alice"),
@@ -1613,10 +1613,10 @@ fn rococo_development_config_genesis(wasm_binary: &[u8]) -> rococo_runtime::Gene
 
 /// diamond development config (single validator Alice)
 #[cfg(feature = "diamond-native")]
-pub fn diamond_development_config() -> Result<diamondChainSpec, String> {
+pub fn diamond_development_config() -> Result<DiamondChainSpec, String> {
 	let wasm_binary = diamond::WASM_BINARY.ok_or("diamond development wasm not available")?;
 
-	Ok(diamondChainSpec::from_genesis(
+	Ok(DiamondChainSpec::from_genesis(
 		"Development",
 		"dev",
 		ChainType::Development,
@@ -1631,10 +1631,10 @@ pub fn diamond_development_config() -> Result<diamondChainSpec, String> {
 
 /// gold development config (single validator Alice)
 #[cfg(feature = "gold-native")]
-pub fn gold_development_config() -> Result<goldChainSpec, String> {
+pub fn gold_development_config() -> Result<GoldChainSpec, String> {
 	let wasm_binary = gold::WASM_BINARY.ok_or("gold development wasm not available")?;
 
-	Ok(goldChainSpec::from_genesis(
+	Ok(GoldChainSpec::from_genesis(
 		"Development",
 		"gold_dev",
 		ChainType::Development,
@@ -1647,16 +1647,16 @@ pub fn gold_development_config() -> Result<goldChainSpec, String> {
 	))
 }
 
-/// Westend development config (single validator Alice)
-#[cfg(feature = "westend-native")]
-pub fn westend_development_config() -> Result<WestendChainSpec, String> {
-	let wasm_binary = westend::WASM_BINARY.ok_or("Westend development wasm not available")?;
+/// ruby development config (single validator Alice)
+#[cfg(feature = "ruby-native")]
+pub fn ruby_development_config() -> Result<RubyChainSpec, String> {
+	let wasm_binary = ruby::WASM_BINARY.ok_or("ruby development wasm not available")?;
 
-	Ok(WestendChainSpec::from_genesis(
+	Ok(RubyChainSpec::from_genesis(
 		"Development",
-		"westend_dev",
+		"ruby_dev",
 		ChainType::Development,
-		move || westend_development_config_genesis(wasm_binary),
+		move || ruby_development_config_genesis(wasm_binary),
 		vec![],
 		None,
 		Some(DEFAULT_PROTOCOL_ID),
@@ -1665,17 +1665,17 @@ pub fn westend_development_config() -> Result<WestendChainSpec, String> {
 	))
 }
 
-/// Rococo development config (single validator Alice)
-#[cfg(feature = "rococo-native")]
-pub fn rococo_development_config() -> Result<RococoChainSpec, String> {
-	let wasm_binary = rococo::WASM_BINARY.ok_or("Rococo development wasm not available")?;
+/// titan development config (single validator Alice)
+#[cfg(feature = "titan-native")]
+pub fn titan_development_config() -> Result<TitanChainSpec, String> {
+	let wasm_binary = titan::WASM_BINARY.ok_or("titan development wasm not available")?;
 
-	Ok(RococoChainSpec::from_genesis(
+	Ok(TitanChainSpec::from_genesis(
 		"Development",
-		"rococo_dev",
+		"titan_dev",
 		ChainType::Development,
-		move || RococoGenesisExt {
-			runtime_genesis_config: rococo_development_config_genesis(wasm_binary),
+		move || TitanGenesisExt {
+			runtime_genesis_config: titan_development_config_genesis(wasm_binary),
 			// Use 1 minute session length.
 			session_length_in_blocks: Some(10),
 		},
@@ -1688,17 +1688,17 @@ pub fn rococo_development_config() -> Result<RococoChainSpec, String> {
 }
 
 /// Wococo development config (single validator Alice)
-#[cfg(feature = "rococo-native")]
-pub fn wococo_development_config() -> Result<RococoChainSpec, String> {
+#[cfg(feature = "titan-native")]
+pub fn wococo_development_config() -> Result<TitanChainSpec, String> {
 	const WOCOCO_DEV_PROTOCOL_ID: &str = "woco";
-	let wasm_binary = rococo::WASM_BINARY.ok_or("Wococo development wasm not available")?;
+	let wasm_binary = titan::WASM_BINARY.ok_or("Wococo development wasm not available")?;
 
-	Ok(RococoChainSpec::from_genesis(
+	Ok(TitanChainSpec::from_genesis(
 		"Development",
 		"wococo_dev",
 		ChainType::Development,
-		move || RococoGenesisExt {
-			runtime_genesis_config: rococo_development_config_genesis(wasm_binary),
+		move || TitanGenesisExt {
+			runtime_genesis_config: titan_development_config_genesis(wasm_binary),
 			// Use 1 minute session length.
 			session_length_in_blocks: Some(10),
 		},
@@ -1725,10 +1725,10 @@ fn diamond_local_testnet_genesis(wasm_binary: &[u8]) -> diamond::GenesisConfig {
 
 /// diamond local testnet config (multivalidator Alice + Bob)
 #[cfg(feature = "diamond-native")]
-pub fn diamond_local_testnet_config() -> Result<diamondChainSpec, String> {
+pub fn diamond_local_testnet_config() -> Result<DiamondChainSpec, String> {
 	let wasm_binary = diamond::WASM_BINARY.ok_or("diamond development wasm not available")?;
 
-	Ok(diamondChainSpec::from_genesis(
+	Ok(DiamondChainSpec::from_genesis(
 		"Local Testnet",
 		"local_testnet",
 		ChainType::Local,
@@ -1756,10 +1756,10 @@ fn gold_local_testnet_genesis(wasm_binary: &[u8]) -> gold::GenesisConfig {
 
 /// gold local testnet config (multivalidator Alice + Bob)
 #[cfg(feature = "gold-native")]
-pub fn gold_local_testnet_config() -> Result<goldChainSpec, String> {
+pub fn gold_local_testnet_config() -> Result<GoldChainSpec, String> {
 	let wasm_binary = gold::WASM_BINARY.ok_or("gold development wasm not available")?;
 
-	Ok(goldChainSpec::from_genesis(
+	Ok(GoldChainSpec::from_genesis(
 		"gold Local Testnet",
 		"gold_local_testnet",
 		ChainType::Local,
@@ -1772,9 +1772,9 @@ pub fn gold_local_testnet_config() -> Result<goldChainSpec, String> {
 	))
 }
 
-#[cfg(feature = "westend-native")]
-fn westend_local_testnet_genesis(wasm_binary: &[u8]) -> westend::GenesisConfig {
-	westend_testnet_genesis(
+#[cfg(feature = "ruby-native")]
+fn ruby_local_testnet_genesis(wasm_binary: &[u8]) -> ruby::GenesisConfig {
+	ruby_testnet_genesis(
 		wasm_binary,
 		vec![
 			get_authority_keys_from_seed_no_beefy("Alice"),
@@ -1785,16 +1785,16 @@ fn westend_local_testnet_genesis(wasm_binary: &[u8]) -> westend::GenesisConfig {
 	)
 }
 
-/// Westend local testnet config (multivalidator Alice + Bob)
-#[cfg(feature = "westend-native")]
-pub fn westend_local_testnet_config() -> Result<WestendChainSpec, String> {
-	let wasm_binary = westend::WASM_BINARY.ok_or("Westend development wasm not available")?;
+/// ruby local testnet config (multivalidator Alice + Bob)
+#[cfg(feature = "ruby-native")]
+pub fn ruby_local_testnet_config() -> Result<RubyChainSpec, String> {
+	let wasm_binary = ruby::WASM_BINARY.ok_or("ruby development wasm not available")?;
 
-	Ok(WestendChainSpec::from_genesis(
-		"Westend Local Testnet",
-		"westend_local_testnet",
+	Ok(RubyChainSpec::from_genesis(
+		"ruby Local Testnet",
+		"ruby_local_testnet",
 		ChainType::Local,
-		move || westend_local_testnet_genesis(wasm_binary),
+		move || ruby_local_testnet_genesis(wasm_binary),
 		vec![],
 		None,
 		Some(DEFAULT_PROTOCOL_ID),
@@ -1803,9 +1803,9 @@ pub fn westend_local_testnet_config() -> Result<WestendChainSpec, String> {
 	))
 }
 
-#[cfg(feature = "rococo-native")]
-fn rococo_local_testnet_genesis(wasm_binary: &[u8]) -> rococo_runtime::GenesisConfig {
-	rococo_testnet_genesis(
+#[cfg(feature = "titan-native")]
+fn titan_local_testnet_genesis(wasm_binary: &[u8]) -> titan_runtime::GenesisConfig {
+	titan_testnet_genesis(
 		wasm_binary,
 		vec![get_authority_keys_from_seed("Alice"), get_authority_keys_from_seed("Bob")],
 		get_account_id_from_seed::<sr25519::Public>("Alice"),
@@ -1813,17 +1813,17 @@ fn rococo_local_testnet_genesis(wasm_binary: &[u8]) -> rococo_runtime::GenesisCo
 	)
 }
 
-/// Rococo local testnet config (multivalidator Alice + Bob)
-#[cfg(feature = "rococo-native")]
-pub fn rococo_local_testnet_config() -> Result<RococoChainSpec, String> {
-	let wasm_binary = rococo::WASM_BINARY.ok_or("Rococo development wasm not available")?;
+/// titan local testnet config (multivalidator Alice + Bob)
+#[cfg(feature = "titan-native")]
+pub fn titan_local_testnet_config() -> Result<TitanChainSpec, String> {
+	let wasm_binary = titan::WASM_BINARY.ok_or("titan development wasm not available")?;
 
-	Ok(RococoChainSpec::from_genesis(
-		"Rococo Local Testnet",
-		"rococo_local_testnet",
+	Ok(TitanChainSpec::from_genesis(
+		"titan Local Testnet",
+		"titan_local_testnet",
 		ChainType::Local,
-		move || RococoGenesisExt {
-			runtime_genesis_config: rococo_local_testnet_genesis(wasm_binary),
+		move || TitanGenesisExt {
+			runtime_genesis_config: titan_local_testnet_genesis(wasm_binary),
 			// Use 1 minute session length.
 			session_length_in_blocks: Some(10),
 		},
@@ -1835,10 +1835,10 @@ pub fn rococo_local_testnet_config() -> Result<RococoChainSpec, String> {
 	))
 }
 
-/// Wococo is a temporary testnet that uses the same runtime as rococo.
-#[cfg(feature = "rococo-native")]
-fn wococo_local_testnet_genesis(wasm_binary: &[u8]) -> rococo_runtime::GenesisConfig {
-	rococo_testnet_genesis(
+/// Wococo is a temporary testnet that uses the same runtime as titan.
+#[cfg(feature = "titan-native")]
+fn wococo_local_testnet_genesis(wasm_binary: &[u8]) -> titan_runtime::GenesisConfig {
+	titan_testnet_genesis(
 		wasm_binary,
 		vec![get_authority_keys_from_seed("Alice"), get_authority_keys_from_seed("Bob")],
 		get_account_id_from_seed::<sr25519::Public>("Alice"),
@@ -1847,15 +1847,15 @@ fn wococo_local_testnet_genesis(wasm_binary: &[u8]) -> rococo_runtime::GenesisCo
 }
 
 /// Wococo local testnet config (multivalidator Alice + Bob)
-#[cfg(feature = "rococo-native")]
-pub fn wococo_local_testnet_config() -> Result<RococoChainSpec, String> {
-	let wasm_binary = rococo::WASM_BINARY.ok_or("Wococo development wasm not available")?;
+#[cfg(feature = "titan-native")]
+pub fn wococo_local_testnet_config() -> Result<TitanChainSpec, String> {
+	let wasm_binary = titan::WASM_BINARY.ok_or("Wococo development wasm not available")?;
 
-	Ok(RococoChainSpec::from_genesis(
+	Ok(TitanChainSpec::from_genesis(
 		"Wococo Local Testnet",
 		"wococo_local_testnet",
 		ChainType::Local,
-		move || RococoGenesisExt {
+		move || TitanGenesisExt {
 			runtime_genesis_config: wococo_local_testnet_genesis(wasm_binary),
 			// Use 1 minute session length.
 			session_length_in_blocks: Some(10),

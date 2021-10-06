@@ -123,9 +123,9 @@ Following accounts are used when `rialto-millau` bridge is running:
 - Millau's `Ferdie` signs relay transactions with messages (lane 00000001) from Rialto to Millau;
 - Rialto's `Ferdie` signs relay transactions with message delivery confirmations (lane 00000001) from Millau to Rialto.
 
-Following accounts are used when `westend-millau` bridge is running:
+Following accounts are used when `ruby-millau` bridge is running:
 
-- Millau's `George` signs relay transactions with new Westend headers.
+- Millau's `George` signs relay transactions with new ruby headers.
 
 ### Docker Usage
 When the network is running you can query logs from individual nodes using:

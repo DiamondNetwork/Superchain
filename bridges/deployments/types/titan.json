@@ -1,0 +1,14 @@
+{
+	"Fee": "titanBalance",
+	"Balance": "titanBalance",
+	"BlockHash": "titanBlockHash",
+	"BlockNumber": "titanBlockNumber",
+	"BridgedBlockHash": "WococoBlockHash",
+	"BridgedBlockNumber": "WococoBlockNumber",
+	"BridgedHeader": "WococoHeader",
+	"Parameter": {
+		"_enum": {
+			"titanToWococoConversionRate": "u128"
+		}
+	}
+}

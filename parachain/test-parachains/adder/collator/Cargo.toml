@@ -23,7 +23,7 @@ structopt = "0.3.23"
 test-parachain-adder = { path = ".." }
 diamond-primitives = { path = "../../../../primitives" }
 diamond-cli = { path = "../../../../cli" }
-diamond-service = { path = "../../../../node/service", features = ["rococo-native"] }
+diamond-service = { path = "../../../../node/service", features = ["titan-native"] }
 diamond-node-primitives = { path = "../../../../node/primitives" }
 diamond-node-subsystem = { path = "../../../../node/subsystem" }
 

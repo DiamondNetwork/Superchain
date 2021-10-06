@@ -14,7 +14,7 @@
   ],
   "telemetryEndpoints": [
     [
-      "wss://telemetry.Polkadot.io/submit/",
+      "wss://telemetry.diamond.io/submit/",
       0
     ]
   ],

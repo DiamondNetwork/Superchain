@@ -28,7 +28,7 @@ pub enum NetworkId {
 	/// Some named network.
 	Named(Vec<u8>),
 	/// The diamond Relay chain
-	Polkadot,
+	Diamond,
 	/// gold.
 	Kusama,
 }

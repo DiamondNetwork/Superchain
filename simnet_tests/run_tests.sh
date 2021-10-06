@@ -87,7 +87,7 @@ export SCRIPTSIMAGE="${SCRIPTSIMAGE}"
 cd "${SCRIPT_PATH}"
 
 set -x  # echo the commands to stdout
-gurke  spawn --config "${SCRIPT_PATH}"/configs/simple_rococo_testnet.toml \
+gurke  spawn --config "${SCRIPT_PATH}"/configs/simple_titan_testnet.toml \
             -n "${NAMESPACE}" \
             --image "${IMAGE}"
 

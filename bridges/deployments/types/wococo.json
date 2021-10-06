@@ -4,12 +4,12 @@
 	"Hash": "WococoBlockHash",
 	"BlockHash": "WococoBlockHash",
 	"BlockNumber": "WococoBlockNumber",
-	"BridgedBlockHash": "RococoBlockHash",
-	"BridgedBlockNumber": "RococoBlockNumber",
-	"BridgedHeader": "RococoHeader",
+	"BridgedBlockHash": "titanBlockHash",
+	"BridgedBlockNumber": "titanBlockNumber",
+	"BridgedHeader": "titanHeader",
 	"Parameter": {
 		"_enum": {
-			"WococoToRococoConversionRate": "u128"
+			"WococoTotitanConversionRate": "u128"
 		}
 	}
 }

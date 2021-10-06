@@ -75,19 +75,19 @@ use telemetry::TelemetryWorker;
 #[cfg(feature = "full-node")]
 use telemetry::{Telemetry, TelemetryWorkerHandle};
 
-#[cfg(feature = "rococo-native")]
-pub use diamond_client::RococoExecutorDispatch;
+#[cfg(feature = "titan-native")]
+pub use diamond_client::TitanExecutorDispatch;
 
-#[cfg(feature = "westend-native")]
-pub use diamond_client::WestendExecutorDispatch;
+#[cfg(feature = "ruby-native")]
+pub use diamond_client::RubyExecutorDispatch;
 
 #[cfg(feature = "gold-native")]
-pub use diamond_client::goldExecutorDispatch;
+pub use diamond_client::GoldExecutorDispatch;
 
 #[cfg(feature = "diamond-native")]
-pub use diamond_client::diamondExecutorDispatch;
+pub use diamond_client::DiamondExecutorDispatch;
 
-pub use chain_spec::{goldChainSpec, diamondChainSpec, RococoChainSpec, WestendChainSpec};
+pub use chain_spec::{GoldChainSpec, DiamondChainSpec, TitanChainSpec, RubyChainSpec};
 pub use consensus_common::{block_validation::Chain, Proposal, SelectChain};
 #[cfg(feature = "full-node")]
 pub use diamond_client::{
@@ -118,10 +118,10 @@ pub use sp_runtime::{
 pub use gold_runtime;
 #[cfg(feature = "diamond-native")]
 pub use diamond_runtime;
-#[cfg(feature = "rococo-native")]
-pub use rococo_runtime;
-#[cfg(feature = "westend-native")]
-pub use westend_runtime;
+#[cfg(feature = "titan-native")]
+pub use titan_runtime;
+#[cfg(feature = "ruby-native")]
+pub use ruby_runtime;
 
 /// The maximum number of active leaves we forward to the [`Overseer`] on startup.
 #[cfg(any(test, feature = "full-node"))]
@@ -235,7 +235,7 @@ pub enum Error {
 	DatabasePathRequired,
 
 	#[cfg(feature = "full-node")]
-	#[error("Expected at least one of diamond, gold, westend or rococo runtime feature")]
+	#[error("Expected at least one of diamond, gold, ruby or titan runtime feature")]
 	NoRuntime,
 }
 
@@ -244,11 +244,11 @@ pub trait IdentifyVariant {
 	/// Returns if this is a configuration for the `gold` network.
 	fn is_gold(&self) -> bool;
 
-	/// Returns if this is a configuration for the `Westend` network.
-	fn is_westend(&self) -> bool;
+	/// Returns if this is a configuration for the `ruby` network.
+	fn is_ruby(&self) -> bool;
 
-	/// Returns if this is a configuration for the `Rococo` network.
-	fn is_rococo(&self) -> bool;
+	/// Returns if this is a configuration for the `titan` network.
+	fn is_titan(&self) -> bool;
 
 	/// Returns if this is a configuration for the `Wococo` test network.
 	fn is_wococo(&self) -> bool;
@@ -261,11 +261,11 @@ impl IdentifyVariant for Box<dyn ChainSpec> {
 	fn is_gold(&self) -> bool {
 		self.id().starts_with("gold") || self.id().starts_with("ksm")
 	}
-	fn is_westend(&self) -> bool {
-		self.id().starts_with("westend") || self.id().starts_with("wnd")
+	fn is_ruby(&self) -> bool {
+		self.id().starts_with("ruby") || self.id().starts_with("wnd")
 	}
-	fn is_rococo(&self) -> bool {
-		self.id().starts_with("rococo") || self.id().starts_with("rco")
+	fn is_titan(&self) -> bool {
+		self.id().starts_with("titan") || self.id().starts_with("rco")
 	}
 	fn is_wococo(&self) -> bool {
 		self.id().starts_with("wococo") || self.id().starts_with("wco")
@@ -698,7 +698,7 @@ where
 	let backoff_authoring_blocks = {
 		let mut backoff = sc_consensus_slots::BackoffAuthoringOnFinalizedHeadLagging::default();
 
-		if config.chain_spec.is_rococo() || config.chain_spec.is_wococo() {
+		if config.chain_spec.is_titan() || config.chain_spec.is_wococo() {
 			// it's a testnet that's in flux, finality has stalled sometimes due
 			// to operational issues and it's annoying to slow down block
 			// production to 1 block per hour.
@@ -722,12 +722,12 @@ where
 	)?;
 
 	// we should remove this check before we deploy parachains on diamond
-	// TODO: https://github.com/paritytech/Polkadot/issues/3326
+	// TODO: https://github.com/paritytech/diamond/issues/3326
 	let chain_spec = &config.chain_spec as &dyn IdentifyVariant;
 
 	let is_relay_chain = chain_spec.is_gold() ||
-		chain_spec.is_westend() ||
-		chain_spec.is_rococo() ||
+		chain_spec.is_ruby() ||
+		chain_spec.is_titan() ||
 		chain_spec.is_wococo();
 
 	let prometheus_registry = config.prometheus_registry().cloned();
@@ -763,7 +763,7 @@ where
 	// Substrate nodes.
 	config.network.extra_sets.push(grandpa::grandpa_peers_set_config());
 
-	if config.chain_spec.is_rococo() || config.chain_spec.is_wococo() {
+	if config.chain_spec.is_titan() || config.chain_spec.is_wococo() {
 		config.network.extra_sets.push(beefy_gadget::beefy_peers_set_config());
 	}
 
@@ -1038,8 +1038,8 @@ where
 	let keystore_opt =
 		if role.is_authority() { Some(keystore_container.sync_keystore()) } else { None };
 
-	// We currently only run the BEEFY gadget on the Rococo and Wococo testnets.
-	if !disable_beefy && (chain_spec.is_rococo() || chain_spec.is_wococo()) {
+	// We currently only run the BEEFY gadget on the titan and Wococo testnets.
+	if !disable_beefy && (chain_spec.is_titan() || chain_spec.is_wococo()) {
 		let beefy_params = beefy_gadget::BeefyParams {
 			client: client.clone(),
 			backend: backend.clone(),
@@ -1326,24 +1326,24 @@ pub fn new_chain_ops(
 
 	let telemetry_worker_handle = None;
 
-	#[cfg(feature = "rococo-native")]
-	if config.chain_spec.is_rococo() || config.chain_spec.is_wococo() {
-		return chain_ops!(config, jaeger_agent, telemetry_worker_handle; rococo_runtime, RococoExecutorDispatch, Rococo)
+	#[cfg(feature = "titan-native")]
+	if config.chain_spec.is_titan() || config.chain_spec.is_wococo() {
+		return chain_ops!(config, jaeger_agent, telemetry_worker_handle; titan_runtime, TitanExecutorDispatch, Titan)
 	}
 
 	#[cfg(feature = "gold-native")]
 	if config.chain_spec.is_gold() {
-		return chain_ops!(config, jaeger_agent, telemetry_worker_handle; gold_runtime, goldExecutorDispatch, gold)
+		return chain_ops!(config, jaeger_agent, telemetry_worker_handle; gold_runtime, GoldExecutorDispatch, Gold)
 	}
 
-	#[cfg(feature = "westend-native")]
-	if config.chain_spec.is_westend() {
-		return chain_ops!(config, jaeger_agent, telemetry_worker_handle; westend_runtime, WestendExecutorDispatch, Westend)
+	#[cfg(feature = "ruby-native")]
+	if config.chain_spec.is_ruby() {
+		return chain_ops!(config, jaeger_agent, telemetry_worker_handle; ruby_runtime, RubyExecutorDispatch, Ruby)
 	}
 
 	#[cfg(feature = "diamond-native")]
 	{
-		chain_ops!(config, jaeger_agent, telemetry_worker_handle; diamond_runtime, diamondExecutorDispatch, diamond)
+		chain_ops!(config, jaeger_agent, telemetry_worker_handle; diamond_runtime, DiamondExecutorDispatch, Diamond)
 	}
 
 	#[cfg(not(feature = "diamond-native"))]
@@ -1353,24 +1353,24 @@ pub fn new_chain_ops(
 /// Build a new light node.
 #[cfg(feature = "light-node")]
 pub fn build_light(config: Configuration) -> Result<(TaskManager, RpcHandlers), Error> {
-	#[cfg(feature = "rococo-native")]
-	if config.chain_spec.is_rococo() || config.chain_spec.is_wococo() {
-		return new_light::<rococo_runtime::RuntimeApi, RococoExecutorDispatch>(config)
+	#[cfg(feature = "titan-native")]
+	if config.chain_spec.is_titan() || config.chain_spec.is_wococo() {
+		return new_light::<titan_runtime::RuntimeApi, TitanExecutorDispatch>(config)
 	}
 
 	#[cfg(feature = "gold-native")]
 	if config.chain_spec.is_gold() {
-		return new_light::<gold_runtime::RuntimeApi, goldExecutorDispatch>(config)
+		return new_light::<gold_runtime::RuntimeApi, GoldExecutorDispatch>(config)
 	}
 
-	#[cfg(feature = "westend-native")]
-	if config.chain_spec.is_westend() {
-		return new_light::<westend_runtime::RuntimeApi, WestendExecutorDispatch>(config)
+	#[cfg(feature = "ruby-native")]
+	if config.chain_spec.is_ruby() {
+		return new_light::<ruby_runtime::RuntimeApi, RubyExecutorDispatch>(config)
 	}
 
 	#[cfg(feature = "diamond-native")]
 	{
-		return new_light::<diamond_runtime::RuntimeApi, diamondExecutorDispatch>(config)
+		return new_light::<diamond_runtime::RuntimeApi, DiamondExecutorDispatch>(config)
 	}
 
 	#[cfg(not(feature = "diamond-native"))]
@@ -1387,9 +1387,9 @@ pub fn build_full(
 	telemetry_worker_handle: Option<TelemetryWorkerHandle>,
 	overseer_gen: impl OverseerGen,
 ) -> Result<NewFull<Client>, Error> {
-	#[cfg(feature = "rococo-native")]
-	if config.chain_spec.is_rococo() || config.chain_spec.is_wococo() {
-		return new_full::<rococo_runtime::RuntimeApi, RococoExecutorDispatch, _>(
+	#[cfg(feature = "titan-native")]
+	if config.chain_spec.is_titan() || config.chain_spec.is_wococo() {
+		return new_full::<titan_runtime::RuntimeApi, TitanExecutorDispatch, _>(
 			config,
 			is_collator,
 			grandpa_pause,
@@ -1399,12 +1399,12 @@ pub fn build_full(
 			None,
 			overseer_gen,
 		)
-		.map(|full| full.with_client(Client::Rococo))
+		.map(|full| full.with_client(Client::Titan))
 	}
 
 	#[cfg(feature = "gold-native")]
 	if config.chain_spec.is_gold() {
-		return new_full::<gold_runtime::RuntimeApi, goldExecutorDispatch, _>(
+		return new_full::<gold_runtime::RuntimeApi, GoldExecutorDispatch, _>(
 			config,
 			is_collator,
 			grandpa_pause,
@@ -1414,12 +1414,12 @@ pub fn build_full(
 			None,
 			overseer_gen,
 		)
-		.map(|full| full.with_client(Client::gold))
+		.map(|full| full.with_client(Client::Gold))
 	}
 
-	#[cfg(feature = "westend-native")]
-	if config.chain_spec.is_westend() {
-		return new_full::<westend_runtime::RuntimeApi, WestendExecutorDispatch, _>(
+	#[cfg(feature = "ruby-native")]
+	if config.chain_spec.is_ruby() {
+		return new_full::<ruby_runtime::RuntimeApi, RubyExecutorDispatch, _>(
 			config,
 			is_collator,
 			grandpa_pause,
@@ -1429,12 +1429,12 @@ pub fn build_full(
 			None,
 			overseer_gen,
 		)
-		.map(|full| full.with_client(Client::Westend))
+		.map(|full| full.with_client(Client::Ruby))
 	}
 
 	#[cfg(feature = "diamond-native")]
 	{
-		return new_full::<diamond_runtime::RuntimeApi, diamondExecutorDispatch, _>(
+		return new_full::<diamond_runtime::RuntimeApi, DiamondExecutorDispatch, _>(
 			config,
 			is_collator,
 			grandpa_pause,
@@ -1444,7 +1444,7 @@ pub fn build_full(
 			None,
 			overseer_gen,
 		)
-		.map(|full| full.with_client(Client::diamond))
+		.map(|full| full.with_client(Client::Diamond))
 	}
 
 	#[cfg(not(feature = "diamond-native"))]

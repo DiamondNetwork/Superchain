@@ -43,10 +43,10 @@ impl CliEncodeCall for Wococo {
 				fee,
 				bridge_instance_index,
 			} => match *bridge_instance_index {
-				bridge::WOCOCO_TO_ROCOCO_INDEX => {
+				bridge::WOCOCO_TO_titan_INDEX => {
 					let payload = Decode::decode(&mut &*payload.0)?;
-					relay_wococo_client::runtime::Call::BridgeMessagesRococo(
-						relay_wococo_client::runtime::BridgeMessagesRococoCall::send_message(lane.0, payload, fee.0),
+					relay_wococo_client::runtime::Call::BridgeMessagestitan(
+						relay_wococo_client::runtime::BridgeMessagestitanCall::send_message(lane.0, payload, fee.0),
 					)
 				}
 				_ => anyhow::bail!(
@@ -62,12 +62,12 @@ impl CliEncodeCall for Wococo {
 		match *call {
 			relay_wococo_client::runtime::Call::System(relay_wococo_client::runtime::SystemCall::remark(_)) => {
 				Ok(DispatchInfo {
-					weight: crate::chains::rococo::SYSTEM_REMARK_CALL_WEIGHT,
+					weight: crate::chains::titan::SYSTEM_REMARK_CALL_WEIGHT,
 					class: DispatchClass::Normal,
 					pays_fee: Pays::Yes,
 				})
 			}
-			_ => anyhow::bail!("Unsupported Rococo call: {:?}", call),
+			_ => anyhow::bail!("Unsupported titan call: {:?}", call),
 		}
 	}
 }

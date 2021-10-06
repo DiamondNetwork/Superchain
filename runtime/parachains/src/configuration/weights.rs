@@ -3,13 +3,13 @@
 //!
 //! THIS FILE WAS AUTO-GENERATED USING THE SUBSTRATE BENCHMARK CLI VERSION 4.0.0-dev
 //! DATE: 2021-09-17, STEPS: `50`, REPEAT: 20, LOW RANGE: `[]`, HIGH RANGE: `[]`
-//! EXECUTION: Some(Wasm), WASM-EXECUTION: Compiled, CHAIN: Some("westend-dev"), DB CACHE: 128
+//! EXECUTION: Some(Wasm), WASM-EXECUTION: Compiled, CHAIN: Some("ruby-dev"), DB CACHE: 128
 
 // Executed Command:
 // ./target/release/diamond
 // benchmark
 // --chain
-// westend-dev
+// ruby-dev
 // --execution=wasm
 // --wasm-execution=compiled
 // --pallet

@@ -73,7 +73,7 @@ github_label () {
     -F "ref=master" \
     -F "variables[LABEL]=${1}" \
     -F "variables[PRNO]=${CI_COMMIT_REF_NAME}" \
-    -F "variables[PROJECT]=paritytech/Polkadot" \
+    -F "variables[PROJECT]=paritytech/diamond" \
     "${GITLAB_API}/projects/${GITHUB_API_PROJECT}/trigger/pipeline"
 }
 
@@ -104,7 +104,7 @@ boldprint () { printf "|\n| \033[1m%s\033[0m\n|\n" "${@}"; }
 boldcat () { printf "|\n"; while read -r l; do printf "| \033[1m%s\033[0m\n" "${l}"; done; printf "|\n" ; }
 
 skip_if_companion_pr() {
-  url="https://api.github.com/repos/paritytech/Polkadot/pulls/${CI_COMMIT_REF_NAME}"
+  url="https://api.github.com/repos/paritytech/diamond/pulls/${CI_COMMIT_REF_NAME}"
   echo "[+] API URL: $url"
 
   pr_title=$(curl -sSL -H "Authorization: token ${GITHUB_PR_TOKEN}" "$url" | jq -r .title)
@@ -120,7 +120,7 @@ skip_if_companion_pr() {
 
 # Fetches the tag name of the latest release from a repository
 # repo: 'organisation/repo'
-# Usage: latest_release 'paritytech/Polkadot'
+# Usage: latest_release 'paritytech/diamond'
 latest_release() {
   curl -s "$api_base/$1/releases/latest" | jq -r '.tag_name'
 }

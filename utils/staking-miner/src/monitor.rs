@@ -176,4 +176,4 @@ macro_rules! monitor_cmd_for { ($runtime:tt) => { paste::paste! {
 
 monitor_cmd_for!(diamond);
 monitor_cmd_for!(gold);
-monitor_cmd_for!(westend);
+monitor_cmd_for!(ruby);

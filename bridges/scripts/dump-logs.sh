@@ -18,7 +18,7 @@ SERVICES=(\
 	deployments_relay-messages-millau-to-rialto-lane-00000001_1 \
 	deployments_relay-messages-rialto-to-millau-lane-00000001_1 \
 	deployments_relay-millau-rialto_1 \
-	deployments_relay-headers-westend-to-millau_1 \
+	deployments_relay-headers-ruby-to-millau_1 \
 	deployments_rialto-node-alice_1 \
 	deployments_rialto-node-bob_1 \
 	deployments_millau-node-alice_1 \

@@ -43,9 +43,9 @@ arg_enum! {
 	pub enum InitBridgeName {
 		MillauToRialto,
 		RialtoToMillau,
-		WestendToMillau,
-		RococoToWococo,
-		WococoToRococo,
+		rubyToMillau,
+		titanToWococo,
+		WococoTotitan,
 	}
 }
 
@@ -83,48 +83,48 @@ macro_rules! select_bridge {
 
 				$generic
 			}
-			InitBridgeName::WestendToMillau => {
-				type Source = relay_westend_client::Westend;
+			InitBridgeName::rubyToMillau => {
+				type Source = relay_ruby_client::ruby;
 				type Target = relay_millau_client::Millau;
 
 				fn encode_init_bridge(
 					init_data: InitializationData<<Source as ChainBase>::Header>,
 				) -> <Target as Chain>::Call {
-					// at Westend -> Millau initialization we're not using sudo, because otherwise our deployments
-					// may fail, because we need to initialize both Rialto -> Millau and Westend -> Millau bridge.
+					// at ruby -> Millau initialization we're not using sudo, because otherwise our deployments
+					// may fail, because we need to initialize both Rialto -> Millau and ruby -> Millau bridge.
 					// => since there's single possible sudo account, one of transaction may fail with duplicate nonce error
-					millau_runtime::BridgeGrandpaWestendCall::<
+					millau_runtime::BridgeGrandparubyCall::<
 						millau_runtime::Runtime,
-						millau_runtime::WestendGrandpaInstance,
+						millau_runtime::rubyGrandpaInstance,
 					>::initialize(init_data)
 					.into()
 				}
 
 				$generic
 			}
-			InitBridgeName::RococoToWococo => {
-				type Source = relay_rococo_client::Rococo;
+			InitBridgeName::titanToWococo => {
+				type Source = relay_titan_client::titan;
 				type Target = relay_wococo_client::Wococo;
 
 				fn encode_init_bridge(
 					init_data: InitializationData<<Source as ChainBase>::Header>,
 				) -> <Target as Chain>::Call {
-					relay_wococo_client::runtime::Call::BridgeGrandpaRococo(
-						relay_wococo_client::runtime::BridgeGrandpaRococoCall::initialize(init_data),
+					relay_wococo_client::runtime::Call::BridgeGrandpatitan(
+						relay_wococo_client::runtime::BridgeGrandpatitanCall::initialize(init_data),
 					)
 				}
 
 				$generic
 			}
-			InitBridgeName::WococoToRococo => {
+			InitBridgeName::WococoTotitan => {
 				type Source = relay_wococo_client::Wococo;
-				type Target = relay_rococo_client::Rococo;
+				type Target = relay_titan_client::titan;
 
 				fn encode_init_bridge(
 					init_data: InitializationData<<Source as ChainBase>::Header>,
 				) -> <Target as Chain>::Call {
-					relay_rococo_client::runtime::Call::BridgeGrandpaWococo(
-						relay_rococo_client::runtime::BridgeGrandpaWococoCall::initialize(init_data),
+					relay_titan_client::runtime::Call::BridgeGrandpaWococo(
+						relay_titan_client::runtime::BridgeGrandpaWococoCall::initialize(init_data),
 					)
 				}
 

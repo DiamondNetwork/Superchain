@@ -41,19 +41,19 @@ pub type FullClient<RuntimeApi, ExecutorDispatch> =
 	sc_service::TFullClient<Block, RuntimeApi, NativeElseWasmExecutor<ExecutorDispatch>>;
 
 #[cfg(not(any(
-	feature = "rococo",
+	feature = "titan",
 	feature = "gold",
-	feature = "westend",
+	feature = "ruby",
 	feature = "diamond"
 )))]
 compile_error!("at least one runtime feature must be enabled");
 
 /// The native executor instance for diamond.
 #[cfg(feature = "diamond")]
-pub struct diamondExecutorDispatch;
+pub struct DiamondExecutorDispatch;
 
 #[cfg(feature = "diamond")]
-impl sc_executor::NativeExecutionDispatch for diamondExecutorDispatch {
+impl sc_executor::NativeExecutionDispatch for DiamondExecutorDispatch {
 	type ExtendHostFunctions = frame_benchmarking::benchmarking::HostFunctions;
 
 	fn dispatch(method: &str, data: &[u8]) -> Option<Vec<u8>> {
@@ -67,10 +67,10 @@ impl sc_executor::NativeExecutionDispatch for diamondExecutorDispatch {
 
 #[cfg(feature = "gold")]
 /// The native executor instance for gold.
-pub struct goldExecutorDispatch;
+pub struct GoldExecutorDispatch;
 
 #[cfg(feature = "gold")]
-impl sc_executor::NativeExecutionDispatch for goldExecutorDispatch {
+impl sc_executor::NativeExecutionDispatch for GoldExecutorDispatch {
 	type ExtendHostFunctions = frame_benchmarking::benchmarking::HostFunctions;
 
 	fn dispatch(method: &str, data: &[u8]) -> Option<Vec<u8>> {
@@ -82,37 +82,37 @@ impl sc_executor::NativeExecutionDispatch for goldExecutorDispatch {
 	}
 }
 
-#[cfg(feature = "westend")]
-/// The native executor instance for Westend.
-pub struct WestendExecutorDispatch;
+#[cfg(feature = "ruby")]
+/// The native executor instance for ruby.
+pub struct RubyExecutorDispatch;
 
-#[cfg(feature = "westend")]
-impl sc_executor::NativeExecutionDispatch for WestendExecutorDispatch {
+#[cfg(feature = "ruby")]
+impl sc_executor::NativeExecutionDispatch for RubyExecutorDispatch {
 	type ExtendHostFunctions = frame_benchmarking::benchmarking::HostFunctions;
 
 	fn dispatch(method: &str, data: &[u8]) -> Option<Vec<u8>> {
-		westend_runtime::api::dispatch(method, data)
+		ruby_runtime::api::dispatch(method, data)
 	}
 
 	fn native_version() -> sc_executor::NativeVersion {
-		westend_runtime::native_version()
+		ruby_runtime::native_version()
 	}
 }
 
-#[cfg(feature = "rococo")]
-/// The native executor instance for Rococo.
-pub struct RococoExecutorDispatch;
+#[cfg(feature = "titan")]
+/// The native executor instance for titan.
+pub struct TitanExecutorDispatch;
 
-#[cfg(feature = "rococo")]
-impl sc_executor::NativeExecutionDispatch for RococoExecutorDispatch {
+#[cfg(feature = "titan")]
+impl sc_executor::NativeExecutionDispatch for TitanExecutorDispatch {
 	type ExtendHostFunctions = frame_benchmarking::benchmarking::HostFunctions;
 
 	fn dispatch(method: &str, data: &[u8]) -> Option<Vec<u8>> {
-		rococo_runtime::api::dispatch(method, data)
+		titan_runtime::api::dispatch(method, data)
 	}
 
 	fn native_version() -> sc_executor::NativeVersion {
-		rococo_runtime::native_version()
+		titan_runtime::native_version()
 	}
 }
 
@@ -198,7 +198,7 @@ where
 
 /// Execute something with the client instance.
 ///
-/// As there exist multiple chains inside diamond, like diamond itself, gold, Westend etc,
+/// As there exist multiple chains inside diamond, like diamond itself, gold, ruby etc,
 /// there can exist different kinds of client types. As these client types differ in the generics
 /// that are being used, we can not easily return them from a function. For returning them from a
 /// function there exists [`Client`]. However, the problem on how to use this client instance still
@@ -223,7 +223,7 @@ pub trait ExecuteWithClient {
 
 /// A handle to a diamond client instance.
 ///
-/// The diamond service supports multiple different runtimes (Westend, diamond itself, etc). As each runtime has a
+/// The diamond service supports multiple different runtimes (ruby, diamond itself, etc). As each runtime has a
 /// specialized client, we need to hide them behind a trait. This is this trait.
 ///
 /// When wanting to work with the inner client, you need to use `execute_with`.
@@ -244,13 +244,13 @@ macro_rules! with_client {
 	} => {
 		match $self {
 			#[cfg(feature = "diamond")]
-			Self::diamond($client) => { $( $code )* },
-			#[cfg(feature = "westend")]
-			Self::Westend($client) => { $( $code )* },
+			Self::Diamond($client) => { $( $code )* },
+			#[cfg(feature = "ruby")]
+			Self::Ruby($client) => { $( $code )* },
 			#[cfg(feature = "gold")]
-			Self::gold($client) => { $( $code )* },
-			#[cfg(feature = "rococo")]
-			Self::Rococo($client) => { $( $code )* },
+			Self::Gold($client) => { $( $code )* },
+			#[cfg(feature = "titan")]
+			Self::Titan($client) => { $( $code )* },
 		}
 	}
 }
@@ -261,13 +261,13 @@ macro_rules! with_client {
 #[derive(Clone)]
 pub enum Client {
 	#[cfg(feature = "diamond")]
-	diamond(Arc<FullClient<diamond_runtime::RuntimeApi, diamondExecutorDispatch>>),
-	#[cfg(feature = "westend")]
-	Westend(Arc<FullClient<westend_runtime::RuntimeApi, WestendExecutorDispatch>>),
+	Diamond(Arc<FullClient<diamond_runtime::RuntimeApi, DiamondExecutorDispatch>>),
+	#[cfg(feature = "ruby")]
+	Ruby(Arc<FullClient<ruby_runtime::RuntimeApi, RubyExecutorDispatch>>),
 	#[cfg(feature = "gold")]
-	gold(Arc<FullClient<gold_runtime::RuntimeApi, goldExecutorDispatch>>),
-	#[cfg(feature = "rococo")]
-	Rococo(Arc<FullClient<rococo_runtime::RuntimeApi, RococoExecutorDispatch>>),
+	Gold(Arc<FullClient<gold_runtime::RuntimeApi, GoldExecutorDispatch>>),
+	#[cfg(feature = "titan")]
+	Titan(Arc<FullClient<titan_runtime::RuntimeApi, TitanExecutorDispatch>>),
 }
 
 impl ClientHandle for Client {

@@ -12,7 +12,7 @@ edition = "2018"
 readme = "README.md"
 
 [dependencies]
-diamond-cli = { path = "cli", features = [ "gold-native", "westend-native", "rococo-native" ]  }
+diamond-cli = { path = "cli", features = [ "gold-native", "ruby-native", "titan-native" ]  }
 color-eyre = { version = "0.5.11", default-features = false }
 parity-util-mem = { version = "*", default-features = false, features = ["jemalloc-global"] }
 
@@ -32,8 +32,8 @@ members = [
 	"runtime/parachains",
 	"runtime/diamond",
 	"runtime/gold",
-	"runtime/rococo",
-	"runtime/westend",
+	"runtime/titan",
+	"runtime/ruby",
 	"runtime/test-runtime",
 	"statement-table",
 	"xcm",
