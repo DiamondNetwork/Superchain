@@ -1,4 +1,4 @@
-# diamond
+# Diamond
 
 Implementation of a <https://diamond.network> node in Rust based on the Substrate framework.
 
